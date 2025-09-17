@@ -1,0 +1,36 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Iinclude",
+      "-Isrc",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-c",
+      "-o",
+      "bin/src/game/game.o",
+      "src/game/game.cpp"
+    ],
+    "directory": "/home/ok/Code/raylib-templeat",
+    "file": "/home/ok/Code/raylib-templeat/src/game/game.cpp",
+    "output": "/home/ok/Code/raylib-templeat/bin/src/game/game.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Iinclude",
+      "-Isrc",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-c",
+      "-o",
+      "bin/main.o",
+      "main.cpp"
+    ],
+    "directory": "/home/ok/Code/raylib-templeat",
+    "file": "/home/ok/Code/raylib-templeat/main.cpp",
+    "output": "/home/ok/Code/raylib-templeat/bin/main.o"
+  }
+]
