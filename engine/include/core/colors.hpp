@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../raylib/raylib.h"
+#include <raylib.h> 
 
 const Color GRUVBOX_DARK0        = {  40,  40,  40, 255 };  // #282828
 const Color GRUVBOX_DARK1        = {  60,  56,  54, 255 };  // #3c3836
