@@ -21,4 +21,3 @@ const Color GRUVBOX_BLUE         = {  69, 133, 136, 255 };  // #458588
 const Color GRUVBOX_PURPLE       = { 177,  98, 134, 255 };  // #b16286
 const Color GRUVBOX_AQUA         = { 104, 157, 106, 255 };  // #689d6a
 const Color GRUVBOX_ORANGE       = { 214,  93,  14, 255 };  // #d65d0e
-
