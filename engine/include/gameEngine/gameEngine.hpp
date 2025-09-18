@@ -1,6 +1,7 @@
 #pragma once
 
-#include "ECS/entity/entity.hpp"
+#include <ECS/entity/entity.hpp>
+#include <ECS/component/component.hpp>
 #include <cameraController/cameraController.hpp>
 #include <raylib.h>
 #include <string>
@@ -38,12 +39,16 @@ private:
   CameraController cameraController;
 
   EntityManager entityManager;
+  ComponentManager componentManager;
 
   void Update();
   void Draw();
 
 public:
-  GameEngine() = default;
+  GameEngine(std::string title = "title") :
+    title(title)
+  {}
+
   explicit GameEngine(const WindowConfig& config, std::string title = "title") : 
     windowConfig(config),
     title(title),

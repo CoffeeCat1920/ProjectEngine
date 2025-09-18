@@ -3,7 +3,7 @@
 #include <string>
 
 void TagArray::AddTag(std::string name) {
-  assert(nameToTag.find(name) != nameToTag.end() && "Register Tag more than once.");
+  assert(nameToTag.find(name) == nameToTag.end() && "Register Tag more than once.");
 
   nameToTag.insert({name, nextTag}); 
   tagToName.insert({nextTag, name});
