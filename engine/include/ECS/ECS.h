@@ -13,6 +13,11 @@ private:
   
 public:
 
+  ECS() :
+    entityManager(std::make_shared<EntityManager>()),
+    componentManager(std::make_shared<ComponentManager>())
+  {}
+
   Entity AddEntity(std::string name) {
     return entityManager->CreateEntity(name);
   }
@@ -33,7 +38,7 @@ public:
   }
 
   template<typename Component> 
-  Component GetComponent(Entity entity) {
+  Component& GetComponent(Entity entity) {
     return componentManager->GetComponent<Component>(entity);
   }
 

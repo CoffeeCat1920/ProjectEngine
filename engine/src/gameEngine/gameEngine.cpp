@@ -1,4 +1,3 @@
-#include "ECS/entity/entity.hpp"
 #include <core/colors.hpp>
 #include <raylib.h>
 #include <gameEngine/gameEngine.hpp>
@@ -7,6 +6,7 @@
 void GameEngine::Draw() {
   SRender();
 }
+
 
 struct CTransform {
   Vector2 position = {0, 0};
@@ -25,23 +25,23 @@ void GameEngine::Update() {
 }
 
 void GameEngine::SMovement() {
-  auto& component = componentManager.GetComponent<CTransform>(e);
+  auto& component = ecs.GetComponent<CTransform>(e);
   component.position.x += component.velocity;
 }
 
 void GameEngine::SRender() {
-  auto component = componentManager.GetComponent<CTransform>(e);
+  auto& component = ecs.GetComponent<CTransform>(e);
   DrawRectangle(component.position.x, component.position.y, 
       windowConfig.blockSize, windowConfig.blockSize, GRUVBOX_RED);
 }
 
 void GameEngine::Init() {
-  e = entityManager.CreateEntity("Test"); 
+  e = ecs.AddEntity("Test"); 
 
   CTransform t({0, 0}, 12.0f);
 
-  componentManager.RegisterComponent<CTransform>();
-  componentManager.AddComponent(e, t);
+  ecs.RegisterComponent<CTransform>();
+  ecs.AddComponent(e, t);
 }
 
 void GameEngine::Run() {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ECS/ECS.h"
 #include <ECS/entity/entity.hpp>
 #include <ECS/component/component.hpp>
 #include <cameraController/cameraController.hpp>
@@ -37,9 +38,8 @@ private:
   const WindowConfig windowConfig;
   const std::string title = "Window";
   CameraController cameraController;
-
-  EntityManager entityManager;
-  ComponentManager componentManager;
+  
+  ECS ecs;
 
   Entity e;
 
