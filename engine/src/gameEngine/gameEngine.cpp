@@ -1,26 +1,44 @@
+#include "ECS/entity/entity.hpp"
 #include <core/colors.hpp>
 #include <raylib.h>
 #include <gameEngine/gameEngine.hpp>
 #include <string>
 
-void GameEngine::Update() {}
-void GameEngine::Draw() {}
+void GameEngine::Draw() {
+  SRender();
+}
 
 struct CTransform {
   Vector2 position = {0, 0};
-  Vector2 durection = {0, 0};
+  Vector2 direction = {0, 0};
   float velocity = 0.0f;
   CTransform() = default; 
-  CTransform(Vector2 position) : 
-    position(position) 
+  CTransform(Vector2 position, float velocity = 0.0f) : 
+    position(position), 
+    velocity(velocity)
   {}
 };
 
-void GameEngine::Init() {
-  auto e = entityManager.CreateEntity(); 
-  entityManager.AddTag(e, "Player");
 
-  CTransform t({0, 0});
+void GameEngine::Update() {
+  SMovement();
+}
+
+void GameEngine::SMovement() {
+  auto& component = componentManager.GetComponent<CTransform>(e);
+  component.position.x += component.velocity;
+}
+
+void GameEngine::SRender() {
+  auto component = componentManager.GetComponent<CTransform>(e);
+  DrawRectangle(component.position.x, component.position.y, 
+      windowConfig.blockSize, windowConfig.blockSize, GRUVBOX_RED);
+}
+
+void GameEngine::Init() {
+  e = entityManager.CreateEntity("Test"); 
+
+  CTransform t({0, 0}, 12.0f);
 
   componentManager.RegisterComponent<CTransform>();
   componentManager.AddComponent(e, t);
@@ -37,6 +55,7 @@ void GameEngine::Run() {
     BeginMode2D(cameraController.GetCamera());
     ClearBackground(BACKGROUND);
     Draw();
+    EndMode2D();
     EndDrawing();
   }
 

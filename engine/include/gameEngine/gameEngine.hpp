@@ -41,6 +41,8 @@ private:
   EntityManager entityManager;
   ComponentManager componentManager;
 
+  Entity e;
+
   void Update();
   void Draw();
 
@@ -54,6 +56,9 @@ public:
     title(title),
     cameraController(windowConfig.scale)
   {}
+
+  void SMovement();
+  void SRender();
 
   void Init();
   void Run();

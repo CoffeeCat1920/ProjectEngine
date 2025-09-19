@@ -5,7 +5,7 @@
 #include <array>
 #include <cassert>
 #include <cstddef>
-#include <unordered_map>
+#include <map>
 
 class IComponentArray {
 public: 
@@ -18,8 +18,9 @@ template<typename T>
 class ComponentArray : public IComponentArray {
 private:
   std::array<T, MAX_ENTITIES> componentArray;  
-  std::unordered_map<Entity, size_t> entityToIndex;
-  std::unordered_map<size_t, Entity> indexToEntity;
+  std::map<Entity, size_t> entityToIndex;
+  std::map<size_t, Entity> indexToEntity;
+
   size_t size = 0;
   
 public:

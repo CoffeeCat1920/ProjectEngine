@@ -1,10 +1,10 @@
 #pragma once
 
-#include <cstddef>
+#include <cstdint>
 #include <map>
 #include <string>
 
-using Tag = std::size_t;  
+using Tag = std::uint64_t;  
 
 class TagArray {
   

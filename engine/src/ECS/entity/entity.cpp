@@ -1,7 +1,8 @@
-#include "ECS/tags/tagArray.hpp"
-#include "core/setting.hpp"
+#include <ECS/tags/tagArray.hpp>
+#include <core/setting.hpp>
 #include <ECS/entity/entity.hpp>
 #include <cassert>
+#include <string>
 
 EntityManager::EntityManager() {
   for (int entity = 0; entity < (int)MAX_ENTITIES; entity++) {
@@ -9,31 +10,31 @@ EntityManager::EntityManager() {
   } 
 }
 
-Entity EntityManager::CreateEntity() {
+std::string EntityManager::GetName(Entity entity) {
+  return entityToNames[entity];
+}
+
+EntityVec EntityManager::GetEntities(std::string name) {
+  return NameToEntities[name];
+}
+
+Entity EntityManager::CreateEntity(std::string name) {
   assert(LivingEntityCount < MAX_ENTITIES && "Too many Entities");
   
   Entity entity = availableEntites.front();
+  entityToNames.insert({entity, name});
   availableEntites.pop();
   LivingEntityCount++;
 
   return entity;
 }
 
-void EntityManager::DestroyEntity(Entity entity) {
+void EntityManager::EntityDestroyed(Entity entity) {
   assert(entity < MAX_ENTITIES && "Invalid Entity"); 
 
   availableEntites.push(entity);
-  entityToTags.erase(entity);
+  entityToNames.erase(entity);
   --LivingEntityCount;
 
   return;
-}
-
-void EntityManager::AddTag(Entity entity, std::string tagname) {
-  assert(entity < MAX_ENTITIES && "Invalid Entity");
-  if (!tagArray.ValidTag(tagname)) {
-    tagArray.AddTag(tagname);
-  }
-  
-  entityToTags[entity].insert(tagArray.GetTag(tagname));
 }
