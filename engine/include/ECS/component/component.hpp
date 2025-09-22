@@ -11,7 +11,7 @@
 #include <unordered_map>
 
 using ComponentId = uint64_t;
-using Signature = std::bitset<MAX_ENTITIES>;
+using Signature = std::bitset<MAX_COMPONENTS>;
 
 class ComponentManager {
   
@@ -30,6 +30,12 @@ private:
     return static_cast<ComponentArray<T>*>(componentArrays[componentIds[typeName]].get());
   }
 
+  template<typename ...T>
+  Signature GetSignature() {
+    Signature signature;
+    ((signature.set(GetComponentId<T>())), ...);
+    return signature;
+  }
 public:
 
   template<typename T>
@@ -77,6 +83,42 @@ public:
     const char* typeName = typeid(T).name();
     assert(componentIds.find(typeName) != componentIds.end() && "Component not registered before use.");
     return componentIds[typeName];
+  }
+
+
+  template<typename ...T>
+  EntityVec GetEntity(uint64_t maxEntities) {
+    Signature required = GetSignature<T ...>(); 
+    EntityVec result{};
+
+    for (Entity e = 0; e < maxEntities; ++e) {
+      const Signature& sig = entitySignatures[e];
+      if ((sig & required) == required) {
+          result.push_back(e);
+      }
+    }
+
+    return result;
+  }
+
+  template<typename ...T>
+  EntityVec GetEntity(EntityVec entities) {
+    Signature required = GetSignature<T ...>(); 
+    EntityVec result{};
+
+    for (const auto& e : entities) {
+      const Signature& sig = entitySignatures[e];
+      if ((sig & required) == required) {
+          result.push_back(e);
+      }
+    }
+
+    return result;
+  }
+
+  template<typename ...T>
+  EntityVec GetEntity() {
+    return GetEntity<T...>(MAX_ENTITIES);
   }
 
 	void EntityDestroyed(Entity entity) {

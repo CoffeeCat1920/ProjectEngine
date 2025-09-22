@@ -14,8 +14,12 @@ std::string EntityManager::GetName(Entity entity) {
   return entityToNames[entity];
 }
 
-EntityVec EntityManager::GetEntities(std::string name) {
+const EntitySet EntityManager::GetEntities(std::string name) {
   return NameToEntities[name];
+}
+
+const EntitySet EntityManager::GetEntities() const {
+  return livingEntites;
 }
 
 Entity EntityManager::CreateEntity(std::string name) {
@@ -24,6 +28,7 @@ Entity EntityManager::CreateEntity(std::string name) {
   Entity entity = availableEntites.front();
   entityToNames.insert({entity, name});
   availableEntites.pop();
+  livingEntites.insert(entity);
   LivingEntityCount++;
 
   return entity;
@@ -34,6 +39,7 @@ void EntityManager::EntityDestroyed(Entity entity) {
 
   availableEntites.push(entity);
   entityToNames.erase(entity);
+  livingEntites.erase(entity);
   --LivingEntityCount;
 
   return;

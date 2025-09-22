@@ -41,8 +41,6 @@ private:
   
   ECS ecs;
 
-  Entity e;
-
   void Update();
   void Draw();
 
@@ -59,6 +57,7 @@ public:
 
   void SMovement();
   void SRender();
+  void SParticle();
 
   void Init();
   void Run();
