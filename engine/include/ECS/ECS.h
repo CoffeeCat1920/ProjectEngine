@@ -68,7 +68,7 @@ public:
   }
 
   template<typename System>
-  std::shared_ptr<System> GetSystem() {
+  const System* GetSystem() const {
     return systemManager->GetSystem<System>();
   }
 };

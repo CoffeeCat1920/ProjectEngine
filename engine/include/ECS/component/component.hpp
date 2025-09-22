@@ -26,7 +26,6 @@ private:
   ComponentArray<T>* GetArray() {
     const char* typeName = typeid(T).name();
     assert(componentIds.find(typeName) != componentIds.end() && "Component not registered before use.");
-    
     return static_cast<ComponentArray<T>*>(componentArrays[componentIds[typeName]].get());
   }
 

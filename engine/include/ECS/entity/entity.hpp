@@ -20,9 +20,9 @@ private:
   std::queue<Entity> availableEntites{};
 
   std::unordered_map<Entity, std::string> entityToNames{};
-  std::unordered_map<std::string, EntitySet> NameToEntities{}; 
+  std::unordered_map<std::string, EntityVec> NameToEntities{}; 
 
-  EntitySet livingEntites{};
+  EntityVec livingEntites{};
 
   uint64_t LivingEntityCount = 0; 
   
@@ -32,8 +32,8 @@ public:
   Entity CreateEntity(std::string name);
 
   std::string GetName(Entity entity);
-  const EntitySet GetEntities(std::string);
-  const EntitySet GetEntities() const; 
+  const EntityVec GetEntities(std::string);
+  const EntityVec GetEntities() const; 
 
   void EntityDestroyed(Entity);
 };

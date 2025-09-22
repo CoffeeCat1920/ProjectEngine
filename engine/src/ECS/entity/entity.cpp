@@ -3,6 +3,7 @@
 #include <ECS/entity/entity.hpp>
 #include <cassert>
 #include <string>
+#include <algorithm>
 
 EntityManager::EntityManager() {
   for (int entity = 0; entity < (int)MAX_ENTITIES; entity++) {
@@ -14,11 +15,11 @@ std::string EntityManager::GetName(Entity entity) {
   return entityToNames[entity];
 }
 
-const EntitySet EntityManager::GetEntities(std::string name) {
+const EntityVec EntityManager::GetEntities(std::string name) {
   return NameToEntities[name];
 }
 
-const EntitySet EntityManager::GetEntities() const {
+const EntityVec EntityManager::GetEntities() const {
   return livingEntites;
 }
 
@@ -28,7 +29,7 @@ Entity EntityManager::CreateEntity(std::string name) {
   Entity entity = availableEntites.front();
   entityToNames.insert({entity, name});
   availableEntites.pop();
-  livingEntites.insert(entity);
+  livingEntites.push_back(entity);
   LivingEntityCount++;
 
   return entity;
@@ -39,7 +40,10 @@ void EntityManager::EntityDestroyed(Entity entity) {
 
   availableEntites.push(entity);
   entityToNames.erase(entity);
-  livingEntites.erase(entity);
+  livingEntites.erase(
+    std::remove(livingEntites.begin(), livingEntites.end(), entity),
+    livingEntites.end()
+  );
   --LivingEntityCount;
 
   return;
