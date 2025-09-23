@@ -32,8 +32,8 @@ public:
   Entity CreateEntity(std::string name);
 
   std::string GetName(Entity entity);
-  const EntityVec GetEntities(std::string);
-  const EntityVec GetEntities() const; 
+  const EntityVec& GetEntities(std::string);
+  const EntityVec& GetEntities() const; 
 
   void EntityDestroyed(Entity);
 };

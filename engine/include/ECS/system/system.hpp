@@ -11,7 +11,7 @@
 struct System {
   std::vector<Entity> entities;
   virtual ~System() = default;    
-  virtual void Do() = 0;
+  virtual void Do() const = 0;
 
   System() = default;
   explicit System(std::vector<Entity>& entities) 

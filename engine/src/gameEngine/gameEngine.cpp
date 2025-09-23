@@ -8,9 +8,6 @@
 #include <gameEngine/gameEngine.hpp>
 #include <string>
 
-void GameEngine::Draw() {
-  SRender();
-}
 
 struct CTransform {
   Vector2 position = {0, 0};
@@ -34,7 +31,7 @@ struct CShape {
 };
 
 void GameEngine::SMovement() {
-  EntityVec entities = ecs.GetEntities<CTransform>();
+  const EntityVec& entities = ecs.GetEntities<CTransform>();
   for (const auto& entity : entities) {
     auto& transform = ecs.GetComponent<CTransform>(entity);
     transform.position.x += transform.velocity * transform.direction.x;
@@ -43,27 +40,33 @@ void GameEngine::SMovement() {
 }
 
 void GameEngine::SRender() {
-  EntityVec entities = ecs.GetEntities<CTransform, CShape>();
+  const EntityVec& entities = ecs.GetEntities<CTransform, CShape>();
   for (const auto& entity : entities) {
-    auto& component = ecs.GetComponent<CTransform>(entity);
-    DrawRectangle(component.position.x, component.position.y, 
-        windowConfig.blockSize/4, windowConfig.blockSize/4, GRUVBOX_RED);
+    const auto& transform = ecs.GetComponent<CTransform>(entity);
+    const auto& shape = ecs.GetComponent<CShape>(entity); 
+    DrawRectangle(transform.position.x, transform.position.y, 
+        shape.width, shape.height, GRUVBOX_RED);
   }
 }
+
 
 struct SRec : System {
   SRec(EntityVec entitites) :
     System(entitites)
   {}
 
-  void Do() {
+  void Do() const override {
     std::cout << "Test" << std::endl;
   }
 };
 
 void GameEngine::Update() {
-  ecs.GetSystem<SRec>();
+  ecs.GetSystem<SRec>()->Do();
   SMovement();
+}
+
+void GameEngine::Draw() {
+  SRender();
 }
 
 
@@ -75,7 +78,7 @@ void GameEngine::Init() {
   for (uint64_t i = 0; i < MAX_ENTITIES; i++) {
     Entity e = ecs.AddEntity("Test" + std::to_string(i));
     CTransform t({(float)(i * 3), 0}, 3.0f);
-    CShape s(windowConfig.blockSize, windowConfig.blockSize);
+    CShape s((float)windowConfig.blockSize/4, (float)windowConfig.blockSize/4);
     ecs.AddComponent(e, t);
     ecs.AddComponent(e, s);
   }
@@ -87,6 +90,9 @@ void GameEngine::Run() {
   SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
+
+    std::cout << "FPS: " << GetFPS() << std::endl;
+
     Update();
     BeginDrawing();
     BeginMode2D(cameraController.GetCamera());

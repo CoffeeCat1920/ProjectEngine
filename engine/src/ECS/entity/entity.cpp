@@ -1,4 +1,3 @@
-#include <ECS/tags/tagArray.hpp>
 #include <core/setting.hpp>
 #include <ECS/entity/entity.hpp>
 #include <cassert>
@@ -15,11 +14,11 @@ std::string EntityManager::GetName(Entity entity) {
   return entityToNames[entity];
 }
 
-const EntityVec EntityManager::GetEntities(std::string name) {
+const EntityVec& EntityManager::GetEntities(std::string name) {
   return NameToEntities[name];
 }
 
-const EntityVec EntityManager::GetEntities() const {
+const EntityVec& EntityManager::GetEntities() const {
   return livingEntites;
 }
 
