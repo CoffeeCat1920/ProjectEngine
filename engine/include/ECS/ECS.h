@@ -3,6 +3,7 @@
 #include <ECS/component/component.hpp>
 #include <ECS/entity/entity.hpp>
 #include <ECS/system/system.hpp>
+#include <iostream>
 #include <memory>
 #include <utility>
 
@@ -28,16 +29,36 @@ public:
   void RemoveEntity(Entity entity) {
     entityManager->EntityDestroyed(entity);
     componentManager->EntityDestroyed(entity); 
+    systemManager->EntityDestroyed(entity);
+  }
+
+  template<typename Components>
+  void RegisterComponent() {
+    componentManager->RegisterComponent<Components>();  
+  } 
+ 
+  template<typename Component>
+  void AddComponent(Entity entity, Component component) {
+    componentManager->AddComponent<Component>(entity, component);
+
+    Signature signature = componentManager->GetSignature(entity); 
+    std::cout << signature << std::endl;
+    systemManager->EntitySignatureChanged(entity, signature);
   }
 
   template<typename... Components>
-  void RegisterComponent() {
-    (componentManager->RegisterComponent<Components>(), ...);  
-  } 
-  
-  template<typename... Components>
-  void AddComponent(Entity entity, Components&&... components) {
+  void AddComponent(Entity entity, Components... components) {
     (componentManager->AddComponent(entity, std::forward<Components>(components)), ...);
+
+    const Signature signature = componentManager->GetSignature(entity);
+    systemManager->EntitySignatureChanged(entity, signature);
+  }
+
+  template<typename... Components>
+  void RemoveComponents(Entity entity) {
+    (componentManager->RemoveComponent<Components>(entity), ...);
+    const Signature signature = componentManager->GetSignature(entity); 
+    systemManager->EntitySignatureChanged(entity, signature);
   }
 
   template<typename ...Components>
@@ -51,24 +72,25 @@ public:
     return componentManager->GetComponent<Component>(entity);
   }
 
+  template<typename Component>
+  ComponentId GetComponentId() {
+    return componentManager->GetComponentType<Component>();
+  }
+
   template<typename... Components> 
   void RemoveComponent(Entity entity) {
     (componentManager->RemoveComponent<Components>(entity), ...);
   }
 
 
-  template<typename... System>
-  void RegisterSystem() {
-    (systemManager->RegisterSystem<System>(entityManager->GetEntities()), ...);   
-  }
-
-  template<typename... System>
-  void RegisterSystem(EntityVec entities) {
-    (systemManager->RegisterSystem<System>(entities), ...);   
+  template<typename System>
+  std::shared_ptr<System> RegisterSystem() {
+    return systemManager->RegisterSystem<System>();   
   }
 
   template<typename System>
-  const System* GetSystem() const {
-    return systemManager->GetSystem<System>();
+  void SetSystemSignature(Signature signature) {
+    systemManager->SetSignature<System>(signature);
   }
+
 };

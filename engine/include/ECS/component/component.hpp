@@ -68,6 +68,12 @@ public:
   }
 
   template<typename T>
+  ComponentId GetComponentType() {
+    const char* name = typeid(T).name();
+    return componentIds[name]; 
+  }
+
+  template<typename T>
   bool HasComponent(Entity entity) {
     ComponentId componentId = GetComponentId<T>();
     return entitySignatures.at(entity).test(componentId);
@@ -126,4 +132,12 @@ public:
 			component->EntityDestroyed(entity);
 		}
 	}
+
+  Signature GetSignature(Entity entity) {
+    return entitySignatures[entity];
+  }
+
+  void SetSignature(Entity entity, Signature signature) {
+    entitySignatures[entity] = signature;
+  }
 };

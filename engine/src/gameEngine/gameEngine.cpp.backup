@@ -1,5 +1,4 @@
 #include "ECS/entity/entity.hpp"
-#include "ECS/system/system.hpp"
 #include "core/setting.hpp"
 #include <core/colors.hpp>
 #include <cstdint>
@@ -50,18 +49,7 @@ void GameEngine::SRender() {
 }
 
 
-struct SRec : System {
-  SRec(EntityVec entitites) :
-    System(entitites)
-  {}
-
-  void Do() const override {
-    std::cout << "Test" << std::endl;
-  }
-};
-
 void GameEngine::Update() {
-  ecs.GetSystem<SRec>()->Do();
   SMovement();
 }
 
@@ -73,7 +61,6 @@ void GameEngine::Draw() {
 void GameEngine::Init() {
   ecs.RegisterComponent<CTransform>();
   ecs.RegisterComponent<CShape>();
-  ecs.RegisterSystem<SRec>();
 
   for (uint64_t i = 0; i < MAX_ENTITIES; i++) {
     Entity e = ecs.AddEntity("Test" + std::to_string(i));

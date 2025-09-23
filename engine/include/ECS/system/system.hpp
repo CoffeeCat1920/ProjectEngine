@@ -1,57 +1,64 @@
 #pragma once
 
+#include "ECS/component/component.hpp"
 #include <ECS/entity/entity.hpp>
 #include <cassert>
 #include <cstddef>
-#include <map>
 #include <memory>
+#include <pstl/glue_algorithm_defs.h>
 #include <string>
-#include <vector>
+#include <unordered_map>
 
 struct System {
-  std::vector<Entity> entities;
-  virtual ~System() = default;    
-  virtual void Do() const = 0;
-
-  System() = default;
-  explicit System(std::vector<Entity>& entities) 
-    : entities(entities)
-  {}
+  std::set<Entity> entities;
 };
 
 using SystemId = size_t;
 
 class SystemManager {
+  
 private:
-  std::map<SystemId, std::unique_ptr<System>> systems;
-  std::map<std::string, SystemId> nameToId;
-  SystemId nextId = 0;
-
-  template<typename T>
-  T* GetDerivedSystem() {
-    std::string name = typeid(T).name();
-    auto it = nameToId.find(name);
-    assert(it != nameToId.end() && "System not registered.");
-    return static_cast<T*>(systems[it->second].get());
-  }
+  std::unordered_map<std::string, Signature> signatures;
+  std::unordered_map<std::string, std::shared_ptr<System>> systems;
 
 public:
-  template<typename T>
-  void RegisterSystem(const std::vector<Entity>& entities) {
-    std::string name = typeid(T).name();
-    assert(nameToId.find(name) == nameToId.end() && "System registered twice.");
-    nameToId[name] = nextId;
-    systems[nextId] = std::make_unique<T>(entities);
-    nextId++;
+
+  template <typename T>
+  std::shared_ptr<T> RegisterSystem() {
+    const std::string typeName = typeid(T).name();
+    assert(systems.find(typeName) == systems.end() && "Registering system more than once.");
+    auto system = std::make_shared<T>();
+    systems.insert({typeName, system});
+    return system;
   }
 
-  template<typename T>
-  T* GetSystem() {
-    return GetDerivedSystem<T>();
+  template <typename T>
+  void SetSignature(Signature signature) {
+    const std::string typeName = typeid(T).name();
+    assert(systems.find(typeName) != systems.end() && "System used before registering");
+    signatures.insert({typeName, signature});
   }
 
-  template<typename T>
-  const T* GetSystem() const {
-    return GetDerivedSystem<T>();
+  void EntityDestroyed(Entity entity) {
+		for (auto const& pair : systems)
+		{
+			auto const& system = pair.second;
+			system->entities.erase(entity);
+		}
   }
+
+  void EntitySignatureChanged(Entity entity, Signature signature) {
+    for (const auto& pair : systems) {
+      const auto& type = pair.first;
+      const auto& system = pair.second;
+      const auto& systemSignature = signatures[type];
+
+      if ((signature & systemSignature) == systemSignature) {
+        system->entities.insert(entity);
+      } else {
+        system->entities.erase(entity);
+      }
+    }
+  }
+
 };
