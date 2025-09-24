@@ -1,0 +1,11 @@
+# TODO
+- [X] Basic ECS
+- [ ] Improving the ECS 
+- [ ] Adding one small built-in component and one simple system
+- [ ] Test it on game layer
+- [ ] Testing adding a component and system at game level
+- [ ] Add lua support
+- [ ] Testing adding a component and system at game level
+- [ ] Adding test cases 
+- [ ] Adding QuadTree based entity poitioning
+- [ ] Adding poition based entity query

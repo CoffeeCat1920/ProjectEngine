@@ -42,7 +42,6 @@ public:
     componentManager->AddComponent<Component>(entity, component);
 
     Signature signature = componentManager->GetSignature(entity); 
-    std::cout << signature << std::endl;
     systemManager->EntitySignatureChanged(entity, signature);
   }
 

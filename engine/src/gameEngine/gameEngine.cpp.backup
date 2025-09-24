@@ -78,8 +78,6 @@ void GameEngine::Run() {
 
   while (!WindowShouldClose()) {
 
-    std::cout << "FPS: " << GetFPS() << std::endl;
-
     Update();
     BeginDrawing();
     BeginMode2D(cameraController.GetCamera());
