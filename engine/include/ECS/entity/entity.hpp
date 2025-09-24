@@ -20,7 +20,7 @@ private:
   std::queue<Entity> availableEntites{};
 
   std::unordered_map<Entity, std::string> entityToNames{};
-  std::unordered_map<std::string, EntityVec> NameToEntities{}; 
+  std::unordered_map<std::string, EntityVec> nameToEntities{}; 
 
   EntityVec livingEntites{};
 

@@ -105,17 +105,15 @@ public:
     gEcs.RegisterComponent<CRigidBody>();
     gEcs.RegisterComponent<CTransform>();
 
-    // Create signature for systems
-    Signature signature;
-    signature.set(gEcs.GetComponentId<CGravity>());
-    signature.set(gEcs.GetComponentId<CRigidBody>());
-    signature.set(gEcs.GetComponentId<CTransform>());
+    const ComponentId cGravity = gEcs.GetComponentId<CGravity>();
+    const ComponentId cRigidBody = gEcs.GetComponentId<CGravity>();
+    const ComponentId cTransform = gEcs.GetComponentId<CGravity>();
 
     auto sPhysics = gEcs.RegisterSystem<SPhysics>();
     auto sRender = gEcs.RegisterSystem<SRender>();
 
-    gEcs.SetSystemSignature<SPhysics>(signature);
-    gEcs.SetSystemSignature<SRender>(signature);
+    gEcs.SetSystemSignature<SPhysics> ({cGravity, cTransform, cRigidBody}); 
+    gEcs.SetSystemSignature<SRender> ({cGravity, cTransform, cRigidBody}); 
 
     entities.resize(MAX_ENTITIES);
 
@@ -125,10 +123,6 @@ public:
       // Unique gravity per entity
       float gravityY = 0.1f + (float)GetRandomValue(1, 4) * 0.05f;
 
-      gEcs.AddComponent(
-        entity,
-        CGravity{ .force = Vector2{0, gravityY} }
-      );
 
       // Random position inside the window
       float posX = (float)GetRandomValue(0, windowConfig.rendering_width() - windowConfig.blockSize);
@@ -137,20 +131,17 @@ public:
       // Slightly varied scale
       float size = (float)((float)windowConfig.blockSize / 4 + GetRandomValue(0, windowConfig.blockSize / 8));
 
-      gEcs.AddComponent(
-        entity,
-        CTransform{
-          .position = Vector2{posX, posY},
-          .scale = Vector2{size, size}
-        }
-      );
-
       // Random initial velocity
       float velX = (float)GetRandomValue(-2, 2) * 0.5f;
       float velY = (float)GetRandomValue(-1, 1) * 0.5f;
 
       gEcs.AddComponent(
         entity,
+        CGravity{ .force = Vector2{0, gravityY} },
+        CTransform{
+          .position = Vector2{posX, posY},
+          .scale = Vector2{size, size}
+        },
         CRigidBody{
           .velocity = Vector2{velX, velY},
           .acceleration = Vector2{0.0f, 0.0f}
@@ -179,10 +170,10 @@ public:
       int textWidth = MeasureText(fpsText.c_str(), 20); // font size 20
       DrawText(
         fpsText.c_str(),
-        windowConfig.rendering_width() - textWidth - 10, // align to right
-        10,                                              // 10 px from top
-        20,                                              // font size
-        WHITE                                            // text color
+        windowConfig.rendering_width() - textWidth - 10, 
+        10,                                              
+        20,                                              
+        GRUVBOX_AQUA
       );
 
       EndDrawing();

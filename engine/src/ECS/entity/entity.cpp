@@ -11,11 +11,15 @@ EntityManager::EntityManager() {
 }
 
 std::string EntityManager::GetName(Entity entity) {
-  return entityToNames[entity];
+  auto it = entityToNames.find(entity);
+  assert(it != entityToNames.end() && "Entity not registered");
+  return it->second;
 }
 
 const EntityVec& EntityManager::GetEntities(std::string name) {
-  return NameToEntities[name];
+  auto it = nameToEntities.find(name);
+  assert(it != nameToEntities.end() && ("None entity registered with requested Name" + name).c_str());
+  return it->second;
 }
 
 const EntityVec& EntityManager::GetEntities() const {

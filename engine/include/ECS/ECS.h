@@ -3,7 +3,6 @@
 #include <ECS/component/component.hpp>
 #include <ECS/entity/entity.hpp>
 #include <ECS/system/system.hpp>
-#include <iostream>
 #include <memory>
 #include <utility>
 
@@ -60,12 +59,6 @@ public:
     systemManager->EntitySignatureChanged(entity, signature);
   }
 
-  template<typename ...Components>
-  EntityVec GetEntities() {
-    const EntityVec entities = entityManager->GetEntities();
-    return componentManager->GetEntity<Components ...>(entities);
-  }
-
   template<typename Component> 
   Component& GetComponent(Entity entity) {
     return componentManager->GetComponent<Component>(entity);
@@ -73,14 +66,13 @@ public:
 
   template<typename Component>
   ComponentId GetComponentId() {
-    return componentManager->GetComponentType<Component>();
+    return componentManager->GetComponentId<Component>();
   }
 
   template<typename... Components> 
   void RemoveComponent(Entity entity) {
     (componentManager->RemoveComponent<Components>(entity), ...);
   }
-
 
   template<typename System>
   std::shared_ptr<System> RegisterSystem() {
@@ -90,6 +82,16 @@ public:
   template<typename System>
   void SetSystemSignature(Signature signature) {
     systemManager->SetSignature<System>(signature);
+  }
+
+  template<typename System>
+  void SetSystemSignature(ComponentId componentId) {
+    systemManager->SetSignature<System>(componentId);
+  }
+
+  template<typename System>
+  void SetSystemSignature(std::initializer_list<ComponentId> componentIds) {
+    systemManager->SetSignature<System>(componentIds);
   }
 
 };

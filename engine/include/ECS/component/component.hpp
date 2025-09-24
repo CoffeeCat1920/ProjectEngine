@@ -4,6 +4,7 @@
 #include <ECS/componentArray/componentArray.hpp>
 #include <array>
 #include <bitset>
+#include <cassert>
 #include <cstdint>
 #include <map>
 #include <memory>
@@ -16,8 +17,8 @@ using Signature = std::bitset<MAX_COMPONENTS>;
 class ComponentManager {
   
 private:
-  std::unordered_map<const char*, ComponentId> componentIds{};
   std::map<ComponentId, std::unique_ptr<IComponentArray>> componentArrays; 
+  std::unordered_map<const char*, ComponentId> componentIds{};
   ComponentId nextComponentId = 0;
 
   std::array<std::bitset<MAX_COMPONENTS>, MAX_ENTITIES> entitySignatures;
@@ -35,6 +36,10 @@ private:
     ((signature.set(GetComponentId<T>())), ...);
     return signature;
   }
+
+  bool IsFull(Entity entity) {
+    return entitySignatures.at(entity).all();
+  }
 public:
 
   template<typename T>
@@ -49,11 +54,11 @@ public:
   
   template<typename T>
   void AddComponent(Entity entity, T component) {
+    assert(!IsFull(entity) && "Can't register components more than max count");
     GetArray<T>()->InsertData(entity, std::move(component));
     ComponentId componentId = GetComponentId<T>();
     entitySignatures.at(entity).set(componentId);
   }
-
 
   template<typename T>
   void RemoveComponent(Entity entity) {
@@ -70,60 +75,17 @@ public:
   template<typename T>
   ComponentId GetComponentType() {
     const char* name = typeid(T).name();
-    return componentIds[name]; 
+    const auto& it = componentIds.find(name); 
+    assert(it != componentIds.end() && "Component is unregistered");
+    return it->second; 
   }
 
-  template<typename T>
-  bool HasComponent(Entity entity) {
-    ComponentId componentId = GetComponentId<T>();
-    return entitySignatures.at(entity).test(componentId);
-  }
-
-  bool IsFull(Entity entity) {
-    return entitySignatures.at(entity).all();
-  }
   
   template<typename T>
   ComponentId GetComponentId() {
     const char* typeName = typeid(T).name();
     assert(componentIds.find(typeName) != componentIds.end() && "Component not registered before use.");
     return componentIds[typeName];
-  }
-
-
-  template<typename ...T>
-  EntityVec GetEntity(uint64_t maxEntities) {
-    Signature required = GetSignature<T ...>(); 
-    EntityVec result{};
-
-    for (Entity e = 0; e < maxEntities; ++e) {
-      const Signature& sig = entitySignatures[e];
-      if ((sig & required) == required) {
-          result.push_back(e);
-      }
-    }
-
-    return result;
-  }
-
-  template<typename ...T>
-  EntityVec GetEntity(EntityVec entities) {
-    Signature required = GetSignature<T ...>(); 
-    EntityVec result{};
-
-    for (const auto& e : entities) {
-      const Signature& sig = entitySignatures[e];
-      if ((sig & required) == required) {
-          result.push_back(e);
-      }
-    }
-
-    return result;
-  }
-
-  template<typename ...T>
-  EntityVec GetEntity() {
-    return GetEntity<T...>(MAX_ENTITIES);
   }
 
 	void EntityDestroyed(Entity entity) {

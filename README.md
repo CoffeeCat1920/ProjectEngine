@@ -1,6 +1,10 @@
 # TODO
 - [X] Basic ECS
-- [ ] Improving the ECS 
+- [-] Improving the ECS 
+    - [X] Adding Argument Pack methods
+    - [X] Improving functionality system manager's signature 
+    - [X] Correcting the asserts and adding them where appropiate
+    - [ ] Moving the game test to game layer and adding utility methods to gameEngine class
 - [ ] Adding one small built-in component and one simple system
 - [ ] Test it on game layer
 - [ ] Testing adding a component and system at game level

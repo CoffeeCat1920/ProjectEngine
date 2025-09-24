@@ -53,7 +53,7 @@ public:
   }
   
   T& GetData(Entity entity) {
-    assert(entityToIndex.find(entity) != entityToIndex.end() && "Retrieving non-existent component.");
+    assert(entityToIndex.find(entity) != entityToIndex.end() && "Component not registered to Entity");
     return componentArray[entityToIndex[entity]];
   }
   
