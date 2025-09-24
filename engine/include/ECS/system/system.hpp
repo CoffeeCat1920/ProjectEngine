@@ -4,6 +4,7 @@
 #include <ECS/entity/entity.hpp>
 #include <cassert>
 #include <cstddef>
+#include <initializer_list>
 #include <memory>
 #include <pstl/glue_algorithm_defs.h>
 #include <string>
@@ -25,6 +26,14 @@ private:
   Signature GetSignature(ComponentIds... componentsIds) {
     Signature signature;
     (signature.set(componentsIds, true), ...);
+    return signature;
+  }
+
+  Signature GetSignature(std::initializer_list<ComponentId> componentIds) {
+    Signature signature;
+    for (const auto id : componentIds) {
+      signature.set(id);
+    }
     return signature;
   }
   
@@ -62,14 +71,10 @@ public:
 
   template<typename T>
   void SetSignature(std::initializer_list<ComponentId> componentIds) {
-    Signature signature;
-    for (auto id : componentIds)
-        signature.set(id);
-
     const std::string typeName = typeid(T).name();
     assert(systems.find(typeName) != systems.end() && "System used before registering");
-
-   signatures[typeName] = signature; 
+    Signature signature = GetSignature(componentIds);
+    signatures[typeName] = signature; 
   }
 
   void EntityDestroyed(Entity entity) {

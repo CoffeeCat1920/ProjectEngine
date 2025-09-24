@@ -3,6 +3,7 @@
 #include <ECS/component/component.hpp>
 #include <ECS/entity/entity.hpp>
 #include <ECS/system/system.hpp>
+#include <iostream>
 #include <memory>
 #include <utility>
 
@@ -89,9 +90,11 @@ public:
     systemManager->SetSignature<System>(componentId);
   }
 
-  template<typename System>
-  void SetSystemSignature(std::initializer_list<ComponentId> componentIds) {
-    systemManager->SetSignature<System>(componentIds);
+  template<typename System, typename... Components>
+  void SetSystemSignature() {
+    systemManager->SetSignature<System>({
+      GetComponentId<Components>()... // expand into a list
+    });
   }
 
 };

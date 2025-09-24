@@ -6,6 +6,7 @@
 #include <ECS/entity/entity.hpp>
 #include <ECS/component/component.hpp>
 #include <cameraController/cameraController.hpp>
+#include <filesystem>
 #include <raylib.h>
 #include <string>
 
@@ -49,6 +50,10 @@ struct CTransform {
   Vector2 scale;
 };
 
+struct CSprite {
+  Texture2D texture = LoadTexture("./assets/icon.png");
+};
+
 struct SPhysics : System {
   void Update() {
     for (const auto& entity : System::entities) {
@@ -68,14 +73,9 @@ struct SPhysics : System {
 struct SRender : System {
   void Update() {
     for (const auto& entity : System::entities) {
+      auto& sprite = gEcs.GetComponent<CSprite>(entity);
       auto& transform = gEcs.GetComponent<CTransform>(entity);
-      DrawRectangle(
-        (int)transform.position.x,
-        (int)transform.position.y,
-        (int)transform.scale.x,
-        (int)transform.scale.y,
-        GRUVBOX_RED
-      );
+      DrawTexture(sprite.texture, transform.position.x, transform.position.y, WHITE);
     }
   }
 };
@@ -100,40 +100,39 @@ public:
   void Init() {}
 
   void Run() {
+    InitWindow(windowConfig.rendering_width(), windowConfig.rendering_height(), title.c_str());
+    SetTargetFPS(60);
+
     // Register components
     gEcs.RegisterComponent<CGravity>();
     gEcs.RegisterComponent<CRigidBody>();
     gEcs.RegisterComponent<CTransform>();
-
-    const ComponentId cGravity = gEcs.GetComponentId<CGravity>();
-    const ComponentId cRigidBody = gEcs.GetComponentId<CGravity>();
-    const ComponentId cTransform = gEcs.GetComponentId<CGravity>();
+    gEcs.RegisterComponent<CSprite>();
 
     auto sPhysics = gEcs.RegisterSystem<SPhysics>();
     auto sRender = gEcs.RegisterSystem<SRender>();
 
-    gEcs.SetSystemSignature<SPhysics> ({cGravity, cTransform, cRigidBody}); 
-    gEcs.SetSystemSignature<SRender> ({cGravity, cTransform, cRigidBody}); 
+    gEcs.SetSystemSignature<SPhysics, CGravity, CTransform, CRigidBody>(); 
+    gEcs.SetSystemSignature<SRender, CTransform, CSprite>(); 
 
     entities.resize(MAX_ENTITIES);
 
     for (auto& entity : entities) {
       entity = gEcs.AddEntity("Falling Square");
 
-      // Unique gravity per entity
-      float gravityY = 0.1f + (float)GetRandomValue(1, 4) * 0.05f;
+      // Fixed gravity
+      float gravityY = 0.2f;
 
-
-      // Random position inside the window
+      // Random spawn position
       float posX = (float)GetRandomValue(0, windowConfig.rendering_width() - windowConfig.blockSize);
-      float posY = (float)GetRandomValue(0, windowConfig.rendering_height() / 4); // spawn near top
+      float posY = (float)GetRandomValue(0, windowConfig.rendering_height() / 4);
 
-      // Slightly varied scale
-      float size = (float)((float)windowConfig.blockSize / 4 + GetRandomValue(0, windowConfig.blockSize / 8));
+      // Fixed size
+      float size = (float)windowConfig.blockSize / 4;
 
-      // Random initial velocity
-      float velX = (float)GetRandomValue(-2, 2) * 0.5f;
-      float velY = (float)GetRandomValue(-1, 1) * 0.5f;
+      // Fixed velocity
+      float velX = 0.0f;
+      float velY = 0.0f;
 
       gEcs.AddComponent(
         entity,
@@ -145,12 +144,10 @@ public:
         CRigidBody{
           .velocity = Vector2{velX, velY},
           .acceleration = Vector2{0.0f, 0.0f}
-        }
+        },
+        CSprite{}
       );
     }
-
-    InitWindow(windowConfig.rendering_width(), windowConfig.rendering_height(), title.c_str());
-    SetTargetFPS(60);
 
 
     while (!WindowShouldClose()) {
@@ -163,11 +160,11 @@ public:
       sRender->Update();
       EndMode2D();
 
-      // --- FPS Counter ---
+      // FPS counter
       int fps = GetFPS();
       std::string fpsText = "FPS: " + std::to_string(fps);
 
-      int textWidth = MeasureText(fpsText.c_str(), 20); // font size 20
+      int textWidth = MeasureText(fpsText.c_str(), 20);
       DrawText(
         fpsText.c_str(),
         windowConfig.rendering_width() - textWidth - 10, 
