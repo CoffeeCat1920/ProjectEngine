@@ -1,7 +1,9 @@
-#include <gameEngine/gameEngine.hpp>
+#include "./src/game/game.hpp"
 
-int main () {
-  GameEngine engine("Ain't No Valley Low");
-  engine.Run();
+int main() {
+  WindowConfig config(32, 10, 6);
+  Game game(config);
+  game.Init();
+  game.Run();
   return 0;
 }

@@ -6,11 +6,8 @@
 #include <ECS/entity/entity.hpp>
 #include <ECS/component/component.hpp>
 #include <cameraController/cameraController.hpp>
-#include <filesystem>
 #include <raylib.h>
 #include <string>
-
-constexpr int DEFAULT_SCALE = 4;
 
 struct WindowConfig {
   int blockSize = 32;
@@ -54,39 +51,12 @@ struct CSprite {
   Texture2D texture = LoadTexture("./assets/icon.png");
 };
 
-struct SPhysics : System {
-  void Update() {
-    for (const auto& entity : System::entities) {
-      auto& rigidBody = gEcs.GetComponent<CRigidBody>(entity);
-      auto& transform = gEcs.GetComponent<CTransform>(entity);
-      auto const& gravity = gEcs.GetComponent<CGravity>(entity);
-
-      transform.position.x += rigidBody.velocity.x;
-      transform.position.y += rigidBody.velocity.y;
-
-      rigidBody.velocity.x += gravity.force.x;
-      rigidBody.velocity.y += gravity.force.y;
-    }
-  }
-};
-
-struct SRender : System {
-  void Update() {
-    for (const auto& entity : System::entities) {
-      auto& sprite = gEcs.GetComponent<CSprite>(entity);
-      auto& transform = gEcs.GetComponent<CTransform>(entity);
-      DrawTexture(sprite.texture, transform.position.x, transform.position.y, WHITE);
-    }
-  }
-};
 
 class GameEngine {
 private:
   const WindowConfig windowConfig;
   const std::string title = "Window";
   CameraController cameraController;
-
-  EntityVec entities;
 
 public:
   GameEngine(std::string title = "title")
@@ -97,85 +67,62 @@ public:
       title(title),
       cameraController(windowConfig.scale) {}
 
-  void Init() {}
-
-  void Run() {
+  void Init() {
     InitWindow(windowConfig.rendering_width(), windowConfig.rendering_height(), title.c_str());
     SetTargetFPS(60);
 
-    // Register components
+    // Register default components
     gEcs.RegisterComponent<CGravity>();
     gEcs.RegisterComponent<CRigidBody>();
     gEcs.RegisterComponent<CTransform>();
     gEcs.RegisterComponent<CSprite>();
+  }
 
-    auto sPhysics = gEcs.RegisterSystem<SPhysics>();
-    auto sRender = gEcs.RegisterSystem<SRender>();
+  // Utility for adding a new entity with components
+  template<typename... Components>
+  Entity CreateEntity(const std::string& name, Components&&... comps) {
+    Entity entity = gEcs.AddEntity(name);
+    gEcs.AddComponent(entity, std::forward<Components>(comps)...);
+    return entity;
+  }
 
-    gEcs.SetSystemSignature<SPhysics, CGravity, CTransform, CRigidBody>(); 
-    gEcs.SetSystemSignature<SRender, CTransform, CSprite>(); 
+  // Utility for registering a system and setting its signature
+  template<typename TSystem, typename... Components>
+  std::shared_ptr<TSystem> RegisterSystem() {
+    auto system = gEcs.RegisterSystem<TSystem>();
+    gEcs.SetSystemSignature<TSystem, Components...>();
+    return system;
+  }
 
-    entities.resize(MAX_ENTITIES);
+  void BeginFrame() {
+    BeginDrawing();
+    ClearBackground(BACKGROUND);
+    BeginMode2D(cameraController.GetCamera());
+  }
 
-    for (auto& entity : entities) {
-      entity = gEcs.AddEntity("Falling Square");
+  void EndFrame() {
+    EndMode2D();
 
-      // Fixed gravity
-      float gravityY = 0.2f;
+    int fps = GetFPS();
+    std::string fpsText = "FPS: " + std::to_string(fps);
+    int textWidth = MeasureText(fpsText.c_str(), 20);
 
-      // Random spawn position
-      float posX = (float)GetRandomValue(0, windowConfig.rendering_width() - windowConfig.blockSize);
-      float posY = (float)GetRandomValue(0, windowConfig.rendering_height() / 4);
+    DrawText(
+      fpsText.c_str(),
+      windowConfig.rendering_width() - textWidth - 10,
+      10,
+      20,
+      GRUVBOX_AQUA
+    );
 
-      // Fixed size
-      float size = (float)windowConfig.blockSize / 4;
+    EndDrawing();
+  }
 
-      // Fixed velocity
-      float velX = 0.0f;
-      float velY = 0.0f;
-
-      gEcs.AddComponent(
-        entity,
-        CGravity{ .force = Vector2{0, gravityY} },
-        CTransform{
-          .position = Vector2{posX, posY},
-          .scale = Vector2{size, size}
-        },
-        CRigidBody{
-          .velocity = Vector2{velX, velY},
-          .acceleration = Vector2{0.0f, 0.0f}
-        },
-        CSprite{}
-      );
-    }
-
-
-    while (!WindowShouldClose()) {
-      sPhysics->Update();
-
-      BeginDrawing();
-      ClearBackground(BACKGROUND);
-
-      BeginMode2D(cameraController.GetCamera());
-      sRender->Update();
-      EndMode2D();
-
-      // FPS counter
-      int fps = GetFPS();
-      std::string fpsText = "FPS: " + std::to_string(fps);
-
-      int textWidth = MeasureText(fpsText.c_str(), 20);
-      DrawText(
-        fpsText.c_str(),
-        windowConfig.rendering_width() - textWidth - 10, 
-        10,                                              
-        20,                                              
-        GRUVBOX_AQUA
-      );
-
-      EndDrawing();
-    }
-
+  void Shutdown() {
     CloseWindow();
+  }
+
+  WindowConfig GetConfig() {
+    return windowConfig;
   }
 };

@@ -4,7 +4,7 @@
     - [X] Adding Argument Pack methods
     - [X] Improving functionality system manager's signature 
     - [X] Correcting the asserts and adding them where appropiate
-    - [ ] Moving the game test to game layer and adding utility methods to gameEngine class
+    - [X] Moving the game test to game layer and adding utility methods to gameEngine class to allow game layer to make the actual game by using it.
 - [ ] Adding one small built-in component and one simple system
 - [ ] Test it on game layer
 - [ ] Testing adding a component and system at game level
