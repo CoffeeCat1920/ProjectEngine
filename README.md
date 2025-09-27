@@ -14,14 +14,18 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
     - [X] Finding a way to save systems efficently in gameEngine layer.
     - [X] A way to efficently load the components required in a scene.
     - [X] A way to make gEcs inaccessable to game layer. 
-- [ ] Scene Management
+- [-] Scene Management
     - [ ] Scene struct
     - [ ] Scene Manager 
-    - [ ] 
+    - [ ] Adding <SceneId> bitset to Scenes 
+    - [ ] Adding ability for defining entites belonging to multiple scenes. 
+    - [ ] Adding ability for entities to be added and destroyed from scenes.
+    - [ ] Adding scene based entities.
+    - [ ] Scene switching
+    - [ ] Scene based system management
 - [ ] Asset Management.
 - [ ] Agnostic Input handeling.
 - [ ] Test it on game layer
-- [X] Testing adding a component and system at game level
 - [ ] Add lua support
 - [ ] Testing adding a component and system at game level
 - [ ] Adding test cases 
