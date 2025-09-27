@@ -8,16 +8,22 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
     - [X] Improving functionality system manager's signature 
     - [X] Correcting the asserts and adding them where appropiate
     - [X] Moving the game test to game layer and adding utility methods to gameEngine class to allow game layer to make the actual game by using it.
-- [-] Adding one small built-in component and one simple system
-    - [ ] Finding a way to save components efficently in gameEngine layer.
-    - [ ] A way to efficently load the components required in a scene.
-    - [ ] Create a sim
-    - [ ] A way to 
+- [X] Adding one small built-in component and one simple system
+    - [X] Finding a way to save components efficently in gameEngine layer.
+    - [X] A way to efficently load the components required in a scene.
+    - [X] Finding a way to save systems efficently in gameEngine layer.
+    - [X] A way to efficently load the components required in a scene.
+    - [X] A way to make gEcs inaccessable to game layer. 
+- [ ] Scene Management
+    - [ ] Scene struct
+    - [ ] Scene Manager 
+    - [ ] 
+- [ ] Asset Management.
+- [ ] Agnostic Input handeling.
 - [ ] Test it on game layer
-- [ ] Testing adding a component and system at game level
+- [X] Testing adding a component and system at game level
 - [ ] Add lua support
 - [ ] Testing adding a component and system at game level
 - [ ] Adding test cases 
 - [ ] Adding QuadTree based entity poitioning
 - [ ] Adding poition based entity query
- 

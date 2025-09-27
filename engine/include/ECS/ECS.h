@@ -3,7 +3,6 @@
 #include <ECS/component/component.hpp>
 #include <ECS/entity/entity.hpp>
 #include <ECS/system/system.hpp>
-#include <iostream>
 #include <memory>
 #include <utility>
 
@@ -13,14 +12,24 @@ private:
   std::shared_ptr<EntityManager> entityManager;
   std::shared_ptr<ComponentManager> componentManager;
   std::shared_ptr<SystemManager> systemManager;
-  
-public:
 
-  ECS() :
+  explicit ECS() :
     entityManager(std::make_shared<EntityManager>()),
     componentManager(std::make_shared<ComponentManager>()),
     systemManager(std::make_shared<SystemManager>())
   {}
+
+public:
+
+  ECS(const ECS&) = delete;
+  ECS& operator=(const ECS&) = delete;
+  ECS(ECS&&) = delete;
+  ECS& operator=(ECS&&) = delete;
+
+  static ECS& Instance() {
+      static ECS instance;  
+      return instance;      
+  }
 
   Entity AddEntity(std::string name) {
     return entityManager->CreateEntity(name);

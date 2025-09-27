@@ -1,7 +1,8 @@
 #pragma once
 
-#include "ECS/component/component.hpp"
+#include <ECS/component/component.hpp>
 #include <ECS/entity/entity.hpp>
+#include <ECS/system/baseSystem.hpp>
 #include <cassert>
 #include <cstddef>
 #include <initializer_list>
@@ -9,10 +10,6 @@
 #include <pstl/glue_algorithm_defs.h>
 #include <string>
 #include <unordered_map>
-
-struct System {
-  std::set<Entity> entities;
-};
 
 using SystemId = size_t;
 

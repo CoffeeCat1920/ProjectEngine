@@ -1,5 +1,6 @@
 #pragma once
-#include "core/setting.hpp"
+
+#include <core/setting.hpp>
 #include <ECS/entity/entity.hpp>
 #include <ECS/componentArray/componentArray.hpp>
 #include <array>

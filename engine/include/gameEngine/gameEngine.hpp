@@ -1,5 +1,7 @@
 #pragma once
-#include "core/colors.hpp"
+#include <gameEngine/defaultComponent.hpp>
+#include <gameEngine/defaultSystem.hpp>
+#include <core/colors.hpp>
 #include <core/setting.hpp>
 #include <ECS/ECS.h>
 #include <ECS/system/system.hpp>
@@ -31,54 +33,41 @@ struct WindowConfig {
   }
 };
 
-inline ECS gEcs;
-
-struct CGravity {
-  Vector2 force;
-};
-
-struct CRigidBody {
-  Vector2 velocity;
-  Vector2 acceleration;
-};
-
-struct CTransform {
-  Vector2 position;
-  Vector2 scale;
-};
-
-struct CSprite {
-  Texture2D texture = LoadTexture("./assets/icon.png");
-};
-
 
 class GameEngine {
 private:
-  const WindowConfig windowConfig;
-  const std::string title = "Window";
+  WindowConfig windowConfig;
+  ECS& gEcs = ECS::Instance();
+  std::string title = "Window";
   CameraController cameraController;
 
+  explicit GameEngine(const WindowConfig& config = {}, const std::string& title = "Window") : 
+    windowConfig(config),
+    title(title),
+    cameraController(windowConfig.scale) 
+  {}
+  
 public:
-  GameEngine(std::string title = "title")
-    : title(title) {}
+  GameEngine(const GameEngine&) = delete;
+  GameEngine& operator=(const GameEngine&) = delete;
+  GameEngine(GameEngine&&) = delete;
+  GameEngine& operator=(GameEngine&&) = delete;
 
-  explicit GameEngine(const WindowConfig& config, std::string title = "title")
-    : windowConfig(config),
-      title(title),
-      cameraController(windowConfig.scale) {}
+  static GameEngine& Instance(const WindowConfig& config = {}, const std::string& title = "Window") {
+    static GameEngine instance(config, title);
+    return instance;
+  }
 
   void Init() {
     InitWindow(windowConfig.rendering_width(), windowConfig.rendering_height(), title.c_str());
     SetTargetFPS(60);
 
-    // Register default components
     gEcs.RegisterComponent<CGravity>();
     gEcs.RegisterComponent<CRigidBody>();
     gEcs.RegisterComponent<CTransform>();
     gEcs.RegisterComponent<CSprite>();
   }
 
-  // Utility for adding a new entity with components
   template<typename... Components>
   Entity CreateEntity(const std::string& name, Components&&... comps) {
     Entity entity = gEcs.AddEntity(name);
@@ -86,7 +75,6 @@ public:
     return entity;
   }
 
-  // Utility for registering a system and setting its signature
   template<typename TSystem, typename... Components>
   std::shared_ptr<TSystem> RegisterSystem() {
     auto system = gEcs.RegisterSystem<TSystem>();
@@ -122,7 +110,7 @@ public:
     CloseWindow();
   }
 
-  WindowConfig GetConfig() {
+  const WindowConfig& GetConfig() const {
     return windowConfig;
   }
 };
