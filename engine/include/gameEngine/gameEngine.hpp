@@ -18,11 +18,12 @@ struct WindowConfig {
   int scale = DEFAULT_SCALE;
 
   WindowConfig() = default;
-  WindowConfig(int block, int w, int h, int s = DEFAULT_SCALE)
-    : blockSize(block),
-      width(w),
-      height(h),
-      scale(s) {}
+  WindowConfig(int block, int w, int h, int s = DEFAULT_SCALE) : 
+    blockSize(block),
+    width(w),
+    height(h),
+    scale(s) 
+  {}
 
   int rendering_width() const {
     return width * blockSize * scale;
