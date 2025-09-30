@@ -16,6 +16,10 @@ struct CTransform {
   Vector2 scale{};
 };
 
+struct CRectangle {
+  Rectangle rectangle{0, 0, 16, 16};
+};
+
 struct CSprite {
   std::filesystem::path path = "";
   Texture2D texture = LoadTexture(path.c_str());
