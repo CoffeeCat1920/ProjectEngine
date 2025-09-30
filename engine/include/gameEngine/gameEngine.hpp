@@ -1,4 +1,5 @@
 #pragma once
+#include "Scene/scene.hpp"
 #include <gameEngine/defaultComponent.hpp>
 #include <gameEngine/defaultSystem.hpp>
 #include <core/colors.hpp>

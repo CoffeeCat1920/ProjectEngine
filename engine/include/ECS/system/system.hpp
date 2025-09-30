@@ -2,7 +2,6 @@
 
 #include <ECS/component/component.hpp>
 #include <ECS/entity/entity.hpp>
-#include <ECS/system/baseSystem.hpp>
 #include <cassert>
 #include <cstddef>
 #include <initializer_list>
@@ -12,6 +11,10 @@
 #include <unordered_map>
 
 using SystemId = size_t;
+
+struct System {
+  std::set<Entity> entities;
+};
 
 class SystemManager {
   
