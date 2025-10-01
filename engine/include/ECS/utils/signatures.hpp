@@ -18,6 +18,7 @@ inline Signature GetSignature(std::initializer_list<ComponentId> componentIds) {
 }
 
 template <typename... ComponentIds>
+
 inline Signature GetSignature(ComponentIds... componentsIds) {
   Signature signature;
   (signature.set(componentsIds, true), ...);

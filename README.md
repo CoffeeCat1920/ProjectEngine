@@ -21,8 +21,8 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
 - Week 3
     - [-] Scene Management
         - [X] Move the Signature to System base
-        - [ ] Move the archetypes to component manager 
-        - [ ] Make methods to get set of archetypes in systems. 
+        - [X] Move the archetypes to component manager 
+        - [X] Make methods to get set of archetypes in systems. 
         - [ ] Checks to see if the component is initilized
         - [ ] System initilization if default components are initilized
         - [ ] Scene class

@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <map>
 #include <memory>
+#include <string>
 #include <typeinfo>
 #include <unordered_map>
 
@@ -18,11 +19,12 @@ using Signature = std::bitset<MAX_COMPONENTS>;
 class ComponentManager {
   
 private:
-  std::map<ComponentId, std::unique_ptr<IComponentArray>> componentArrays; 
-  std::unordered_map<const char*, ComponentId> componentIds{};
+  std::map<ComponentId, std::unique_ptr<IComponentArray>> componentArrays{}; 
+  std::unordered_map<std::string, ComponentId> componentIds{};
   ComponentId nextComponentId = 0;
 
-  std::array<std::bitset<MAX_COMPONENTS>, MAX_ENTITIES> entitySignatures;
+  std::array<Signature, MAX_ENTITIES> entitySignatures{};
+  std::unordered_map<Signature, EntitySet> archetypes{};
 
   template<typename T>
   ComponentArray<T>* GetArray() {
@@ -41,6 +43,7 @@ private:
   bool IsFull(Entity entity) {
     return entitySignatures.at(entity).all();
   }
+
 public:
 
   template<typename T>
@@ -56,16 +59,20 @@ public:
   template<typename T>
   void AddComponent(Entity entity, T component) {
     assert(!IsFull(entity) && "Can't register components more than max count");
-    GetArray<T>()->InsertData(entity, std::move(component));
+    GetArray<T>()->InsertData(entity, component);
     ComponentId componentId = GetComponentId<T>();
+    archetypes[entitySignatures.at(entity)].erase(entity);
     entitySignatures.at(entity).set(componentId);
+    archetypes[entitySignatures.at(entity)].insert(entity); 
   }
 
   template<typename T>
   void RemoveComponent(Entity entity) {
     GetArray<T>()->RemoveData(entity);
     ComponentId componentId = GetComponentId<T>();
+    archetypes[entitySignatures.at(entity)].erase(entity);
     entitySignatures.at(entity).reset(componentId);
+    archetypes[entitySignatures.at(entity)].insert(entity);
   }
   
   template<typename T>
@@ -80,7 +87,6 @@ public:
     assert(it != componentIds.end() && "Component is unregistered");
     return it->second; 
   }
-
   
   template<typename T>
   ComponentId GetComponentId() {
@@ -93,8 +99,15 @@ public:
 		for (auto const& pair : componentArrays) {
 			auto const& component = pair.second;
 			component->EntityDestroyed(entity);
+      archetypes[entitySignatures.at(entity)].erase(entity);
 		}
 	}
+
+  const EntitySet& GetArchetypeEntities(const Signature& signature) const {
+    static const EntitySet empty;
+    auto it = archetypes.find(signature);
+    return (it != archetypes.end()) ? it->second : empty;
+  }
 
   Signature GetSignature(Entity entity) {
     return entitySignatures[entity];
