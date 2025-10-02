@@ -1,7 +1,6 @@
 #pragma once
 
-#include <ECS/ECS.h>
-#include <ECS/utils/signatures.hpp>
+#include "ECS/ECS.h"
 #include <gameEngine/defaultComponent.hpp> 
 
 struct SPhysics : System {

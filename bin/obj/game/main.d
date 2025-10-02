@@ -4,7 +4,6 @@ bin/obj/game/main.o: game/main.cpp game/./src/game/game.hpp \
  engine/include/core/setting.hpp engine/include/ECS/entity/entity.hpp \
  engine/include/ECS/componentArray/componentArray.hpp \
  engine/include/ECS/system/system.hpp \
- engine/include/ECS/utils/signatures.hpp \
  engine/include/gameEngine/defaultComponent.hpp \
  vendor/raylib/include/raylib.h \
  engine/include/gameEngine/defaultSystem.hpp \
@@ -19,7 +18,6 @@ engine/include/core/setting.hpp:
 engine/include/ECS/entity/entity.hpp:
 engine/include/ECS/componentArray/componentArray.hpp:
 engine/include/ECS/system/system.hpp:
-engine/include/ECS/utils/signatures.hpp:
 engine/include/gameEngine/defaultComponent.hpp:
 vendor/raylib/include/raylib.h:
 engine/include/gameEngine/defaultSystem.hpp:
