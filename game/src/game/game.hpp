@@ -16,9 +16,6 @@ public:
   void Init() {
     engine.Init();
 
-    physicsSystem = engine.RegisterSystem<SPhysics, CGravity, CTransform, CRigidBody>();
-    renderSystem = engine.RegisterSystem<SRender, CTransform, CSprite>();
-
     for (uint64_t i = 0; i < MAX_ENTITIES; i++) {
       float gravityY = 0.05f;
       float posX = (float)GetRandomValue(0, engine.GetConfig().rendering_width() - engine.GetConfig().blockSize);
@@ -37,10 +34,7 @@ public:
 
   void Run() {
     while (!WindowShouldClose()) {
-      physicsSystem->Update();
-
       engine.BeginFrame();
-      renderSystem->Update();
       engine.EndFrame();
     }
 

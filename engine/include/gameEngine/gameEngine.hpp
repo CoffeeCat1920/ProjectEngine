@@ -1,5 +1,4 @@
 #pragma once
-#include "Scene/scene.hpp"
 #include <gameEngine/defaultComponent.hpp>
 #include <gameEngine/defaultSystem.hpp>
 #include <core/colors.hpp>
@@ -42,6 +41,9 @@ private:
   std::string title = "Window";
   CameraController cameraController;
 
+  std::shared_ptr<SPhysics> physicsSystem;
+  std::shared_ptr<SRender> renderSystem;
+
   explicit GameEngine(const WindowConfig& config = {}, const std::string& title = "Window") : 
     windowConfig(config),
     title(title),
@@ -67,6 +69,13 @@ public:
     gEcs.RegisterComponent<CRigidBody>();
     gEcs.RegisterComponent<CTransform>();
     gEcs.RegisterComponent<CSprite>();
+
+    // TODO: Make a util method in ECS class
+    physicsSystem = gEcs.RegisterSystem<SPhysics>();
+    gEcs.SetSystemSignature<SPhysics, CGravity, CTransform, CRigidBody>();
+
+    renderSystem = gEcs.RegisterSystem<SRender>();
+    gEcs.SetSystemSignature<SRender, CTransform, CSprite>();
   }
 
   template<typename... Components>
@@ -84,9 +93,11 @@ public:
   }
 
   void BeginFrame() {
+    physicsSystem->Update();
     BeginDrawing();
     ClearBackground(BACKGROUND);
     BeginMode2D(cameraController.GetCamera());
+    renderSystem->Update();
   }
 
   void EndFrame() {

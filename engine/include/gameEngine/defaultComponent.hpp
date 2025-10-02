@@ -6,15 +6,16 @@ struct CGravity {
   Vector2 force{};
 };
 
+struct CTransform {
+  Vector2 position{};
+  Vector2 scale{};
+};
+
 struct CRigidBody {
   Vector2 velocity{};
   Vector2 acceleration{};
 };
 
-struct CTransform {
-  Vector2 position{};
-  Vector2 scale{};
-};
 
 struct CRectangle {
   Rectangle rectangle{0, 0, 16, 16};

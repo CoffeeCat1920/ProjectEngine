@@ -27,8 +27,8 @@ public:
   ECS& operator=(ECS&&) = delete;
 
   static ECS& Instance() {
-      static ECS instance;  
-      return instance;      
+    static ECS instance;  
+    return instance;      
   }
 
   Entity AddEntity(std::string name) {
