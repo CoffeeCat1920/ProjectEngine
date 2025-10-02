@@ -4,6 +4,7 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
 
 # TODO
 <<<<<<< HEAD
+<<<<<<< HEAD
 - Week 1
     - [X] Basic ECS
     - [X] Improving the ECS 
@@ -32,6 +33,8 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
         - [ ] Parsing said Json based scene
 
 =======
+=======
+>>>>>>> parent of c7c2daf (Move the Signature to System base)
 - [X] Basic ECS
 - [X] Improving the ECS 
     - [X] Adding Argument Pack methods
@@ -53,6 +56,9 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
     - [ ] Adding scene based entities.
     - [ ] Scene switching
     - [ ] Scene based system management
+<<<<<<< HEAD
+>>>>>>> parent of c7c2daf (Move the Signature to System base)
+=======
 >>>>>>> parent of c7c2daf (Move the Signature to System base)
 - [ ] Asset Management.
 - [ ] Agnostic Input handeling.
