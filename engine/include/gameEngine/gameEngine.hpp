@@ -33,7 +33,6 @@ struct WindowConfig {
   }
 };
 
-
 class GameEngine {
 private:
   WindowConfig windowConfig;
