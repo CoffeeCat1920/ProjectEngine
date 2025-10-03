@@ -24,9 +24,13 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
         - [X] I think all default systems be always present. I hope it doesn't becomes any issue though.
         - [X] Move the Signature to System base
     - [-] Scene Management
-        - [ ] Scene class
+        - [X] Make a util method in ECS class
+        - [-] Entity creation with certain objects
+        - [ ] Scene struct 
+        - [ ] Scene Manager
         - [ ] Json based scene 
         - [ ] Parsing said Json based scene
+        - [ ] Creating entities from json objects
 
 - [ ] Asset Management.
 - [ ] Agnostic Input handeling.

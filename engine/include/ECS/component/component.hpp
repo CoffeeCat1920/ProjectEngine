@@ -56,11 +56,11 @@ public:
     nextComponentId++;
   }
   
-  template<typename T>
-  void AddComponent(Entity entity, T component) {
+  template<typename ComponentName>
+  void AddComponent(Entity entity, ComponentName component) {
     assert(!IsFull(entity) && "Can't register components more than max count");
-    GetArray<T>()->InsertData(entity, component);
-    ComponentId componentId = GetComponentId<T>();
+    GetArray<ComponentName>()->InsertData(entity, component);
+    ComponentId componentId = GetComponentId<ComponentName>();
     archetypes[entitySignatures.at(entity)].erase(entity);
     entitySignatures.at(entity).set(componentId);
     archetypes[entitySignatures.at(entity)].insert(entity); 

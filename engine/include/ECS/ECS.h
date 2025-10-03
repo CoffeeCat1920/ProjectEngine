@@ -54,9 +54,9 @@ public:
     systemManager->EntitySignatureChanged(entity, signature);
   }
 
-  template<typename... Components>
-  void AddComponent(Entity entity, Components... components) {
-    (componentManager->AddComponent(entity, std::forward<Components>(components)), ...);
+  template<typename... ComponentsNames>
+  void AddComponent(Entity entity, ComponentsNames... components) {
+    (componentManager->AddComponent(entity, std::forward<ComponentsNames>(components)), ...);
 
     const Signature signature = componentManager->GetSignature(entity);
     systemManager->EntitySignatureChanged(entity, signature);
