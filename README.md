@@ -25,7 +25,8 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
         - [X] Move the Signature to System base
     - [-] Scene Management
         - [X] Make a util method in ECS class
-        - [-] Entity creation with certain objects
+        - [-] Entity Serilization 
+        - [ ] Entity Desiilization
         - [ ] Scene struct 
         - [ ] Scene Manager
         - [ ] Json based scene 

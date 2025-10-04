@@ -2,7 +2,7 @@
 
 #include <ECS/ECS.h>
 #include <ECS/utils/signatures.hpp>
-#include <gameEngine/defaultComponent.hpp> 
+#include <gameEngine/Component/Component.hpp>
 
 struct SPhysics : System {
   ECS& gEcs = ECS::Instance();

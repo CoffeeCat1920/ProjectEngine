@@ -69,6 +69,11 @@ public:
     systemManager->EntitySignatureChanged(entity, signature);
   }
 
+  template<typename Component>
+  bool HasComponent(Entity entity) {
+    return componentManager->HasComponent<Component>(entity);
+  }
+
   template<typename Component> 
   Component& GetComponent(Entity entity) {
     return componentManager->GetComponent<Component>(entity);

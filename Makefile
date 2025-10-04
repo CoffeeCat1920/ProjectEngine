@@ -3,9 +3,9 @@
 # ===========================
 CXX       := g++
 CXXFLAGS  := -Wall -Wextra -std=c++17 -MMD -MP \
-             -Iengine/include -Ivendor/raylib/include -Igame/include
+             -Iengine/include -Ivendor/raylib/include -Ivendor/json/include -Igame/include
 
-LDFLAGS   := -Lvendor/raylib/lib -Lengine/lib
+LDFLAGS   := -Lvendor/raylib/lib -Lengine/lib 
 LDLIBS    := -lengine -lraylib -lm -lpthread -ldl
 
 BIN_DIR   := bin

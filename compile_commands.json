@@ -7,15 +7,16 @@
       "-std=c++17",
       "-Iengine/include",
       "-Ivendor/raylib/include",
+      "-Ivendor/json/include",
       "-Igame/include",
       "-c",
       "-o",
-      "bin/obj/engine/gameEngine/gameEngine.o",
-      "engine/src/gameEngine/gameEngine.cpp"
+      "bin/obj/engine/ECS/entity/entity.o",
+      "engine/src/ECS/entity/entity.cpp"
     ],
     "directory": "/home/ok/Code/ProjectEngine",
-    "file": "/home/ok/Code/ProjectEngine/engine/src/gameEngine/gameEngine.cpp",
-    "output": "/home/ok/Code/ProjectEngine/bin/obj/engine/gameEngine/gameEngine.o"
+    "file": "/home/ok/Code/ProjectEngine/engine/src/ECS/entity/entity.cpp",
+    "output": "/home/ok/Code/ProjectEngine/bin/obj/engine/ECS/entity/entity.o"
   },
   {
     "arguments": [
@@ -25,6 +26,26 @@
       "-std=c++17",
       "-Iengine/include",
       "-Ivendor/raylib/include",
+      "-Ivendor/json/include",
+      "-Igame/include",
+      "-c",
+      "-o",
+      "bin/obj/engine/cameraController/cameraController.o",
+      "engine/src/cameraController/cameraController.cpp"
+    ],
+    "directory": "/home/ok/Code/ProjectEngine",
+    "file": "/home/ok/Code/ProjectEngine/engine/src/cameraController/cameraController.cpp",
+    "output": "/home/ok/Code/ProjectEngine/bin/obj/engine/cameraController/cameraController.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-Wextra",
+      "-std=c++17",
+      "-Iengine/include",
+      "-Ivendor/raylib/include",
+      "-Ivendor/json/include",
       "-Igame/include",
       "-c",
       "-o",
@@ -43,6 +64,7 @@
       "-std=c++17",
       "-Iengine/include",
       "-Ivendor/raylib/include",
+      "-Ivendor/json/include",
       "-Igame/include",
       "-c",
       "-o",
@@ -52,23 +74,5 @@
     "directory": "/home/ok/Code/ProjectEngine",
     "file": "/home/ok/Code/ProjectEngine/game/src/player/player.cpp",
     "output": "/home/ok/Code/ProjectEngine/bin/obj/game/player/player.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/g++",
-      "-Wall",
-      "-Wextra",
-      "-std=c++17",
-      "-Iengine/include",
-      "-Ivendor/raylib/include",
-      "-Igame/include",
-      "-c",
-      "-o",
-      "bin/obj/game/game/game.o",
-      "game/src/game/game.cpp"
-    ],
-    "directory": "/home/ok/Code/ProjectEngine",
-    "file": "/home/ok/Code/ProjectEngine/game/src/game/game.cpp",
-    "output": "/home/ok/Code/ProjectEngine/bin/obj/game/game/game.o"
   }
 ]

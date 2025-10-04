@@ -74,6 +74,12 @@ public:
     entitySignatures.at(entity).reset(componentId);
     archetypes[entitySignatures.at(entity)].insert(entity);
   }
+
+  template<typename T>
+  bool HasComponent(Entity entity) {
+    ComponentId componentId = GetComponentId<T>();     
+    return entitySignatures.at(entity).test(componentId);
+  }
   
   template<typename T>
   T& GetComponent (Entity entity) {
