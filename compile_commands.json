@@ -55,24 +55,5 @@
     "directory": "/home/ok/Code/ProjectEngine",
     "file": "/home/ok/Code/ProjectEngine/game/main.cpp",
     "output": "/home/ok/Code/ProjectEngine/bin/obj/game/main.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/g++",
-      "-Wall",
-      "-Wextra",
-      "-std=c++17",
-      "-Iengine/include",
-      "-Ivendor/raylib/include",
-      "-Ivendor/json/include",
-      "-Igame/include",
-      "-c",
-      "-o",
-      "bin/obj/game/player/player.o",
-      "game/src/player/player.cpp"
-    ],
-    "directory": "/home/ok/Code/ProjectEngine",
-    "file": "/home/ok/Code/ProjectEngine/game/src/player/player.cpp",
-    "output": "/home/ok/Code/ProjectEngine/bin/obj/game/player/player.o"
   }
 ]

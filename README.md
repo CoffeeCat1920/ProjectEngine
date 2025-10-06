@@ -1,8 +1,4 @@
-![icon](assets/icon.png)
 # Project Description
-An ECS-based Lua, Game Engine written in C++ to create games that have to handle alot of data. 
-
-# TODO
 - Week 1
     - [X] Basic ECS
     - [X] Improving the ECS 
@@ -19,7 +15,7 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
         - [X] A way to efficently load the components required in a scene.
         - [X] A way to make gEcs inaccessable to game layer. 
 
-- Week 3
+- Week 3/4
     - [X] Systems and component Management
         - [X] I think all default systems be always present. I hope it doesn't becomes any issue though.
         - [X] Move the Signature to System base
@@ -27,11 +23,12 @@ An ECS-based Lua, Game Engine written in C++ to create games that have to handle
         - [X] Make a util method in ECS class
         - [X] Entity Serilization 
         - [X] Entity Desiilization
-        - [ ] Scene struct 
-        - [ ] Scene Manager
-        - [ ] Json based scene 
-        - [ ] Parsing said Json based scene
-        - [ ] Creating entities from json objects
+        - [-] Scene struct 
+            - [ ] Loading Json file.
+            - [ ] Extracting entities from it.
+            - [ ] Extracting components from it and desiilize it.
+            - [ ] Creating those entities.
+
 
 - [ ] Asset Management.
 - [ ] Agnostic Input handeling.

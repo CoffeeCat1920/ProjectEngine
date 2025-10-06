@@ -1,0 +1,30 @@
+{
+  "Scene1" : [
+    {
+      "entities": [
+        {
+          "test": 1,
+          "components": {
+            "CGravity": {
+              "force": { "x": 0.0, "y": -9.8 }
+            },
+            "CTransform": {
+              "position": { "x": 100.0, "y": 200.0 },
+              "scale": { "x": 1.0, "y": 1.0 }
+            },
+            "CRigidBody": {
+              "velocity": { "x": 0.0, "y": 0.0 },
+              "acceleration": { "x": 0.0, "y": 0.0 }
+            },
+            "CRectangle": {
+              "rectangle": { "x": 100.0, "y": 200.0, "width": 16.0, "height": 16.0 }
+            },
+            "CSprite": {
+              "path": "./assets/bird.png"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

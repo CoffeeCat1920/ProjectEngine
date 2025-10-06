@@ -1,6 +1,5 @@
 #pragma once
 #include <gameEngine/Component/Component.hpp>
-#include <gameEngine/Component/ComponentRegistry.hpp>
 #include <gameEngine/System/System.hpp>
 #include <core/colors.hpp>
 #include <core/setting.hpp>

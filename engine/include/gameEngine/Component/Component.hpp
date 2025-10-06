@@ -1,8 +1,7 @@
 #pragma once
-#include <gameEngine/Component/ComponentRegistry.hpp>
 #include <filesystem>
 #include <raylib.h>
-#include <json.hpp>
+#include <json_util.hpp>
 
 
 inline void to_json(json& j, const Vector2& v) {
@@ -52,10 +51,7 @@ struct CSprite {
     texture = LoadTexture(path.c_str());
   }
 
-  ~CSprite() {
-    UnloadTexture(texture);
-  }
-};
+}; 
 
 inline void to_json(json& j, const CSprite& s) {
   j = json{ {"path", s.path.string()} };

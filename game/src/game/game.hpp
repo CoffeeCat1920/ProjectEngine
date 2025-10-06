@@ -5,8 +5,6 @@
 class Game {
 private:
   GameEngine& engine;
-  std::shared_ptr<SPhysics> physicsSystem;
-  std::shared_ptr<SRender> renderSystem;
 
 public:
   explicit Game(const WindowConfig& config) :
@@ -29,6 +27,7 @@ public:
         CRigidBody{.velocity = Vector2{0.0f, 0.0f}, .acceleration = Vector2{0.0f, 0.0f}},
         CSprite{}
       );
+
     }
   }
 
@@ -36,6 +35,9 @@ public:
     while (!WindowShouldClose()) {
       engine.BeginFrame();
       engine.EndFrame();
+
+      // TODO: Implement this thing
+      // engine.LoadScene("./assets/scene.json");
     }
 
     engine.Shutdown();

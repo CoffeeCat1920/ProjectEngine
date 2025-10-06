@@ -1,7 +1,6 @@
 #pragma once
 
 #include <ECS/ECS.h>
-#include <ECS/entity/entity.hpp>
 #include <json_util.hpp>
 
 struct IComponentSerializer {
@@ -26,4 +25,3 @@ struct ComponentSerializer : IComponentSerializer {
     }
   }
 };
-
