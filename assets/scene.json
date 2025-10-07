@@ -3,7 +3,7 @@
     {
       "entities": [
         {
-          "test": 1,
+          "name" : "test",
           "components": {
             "CGravity": {
               "force": { "x": 0.0, "y": -9.8 }
