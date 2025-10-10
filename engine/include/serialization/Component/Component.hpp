@@ -2,7 +2,6 @@
 
 #include <ECS/ECS.h>
 #include <json_util.hpp>
-#include <gameEngine/Component/ComponentRegistry.hpp>
 
 template<typename T>
 void SerializeComponent(Entity e, ECS& ecs, json& j) {}
