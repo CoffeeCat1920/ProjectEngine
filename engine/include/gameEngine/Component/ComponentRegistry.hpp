@@ -1,69 +1,55 @@
 #pragma once
 
-#include "gameEngine/Component/physics/CRigidBody.hpp"
-#include "gameEngine/Component/render/CSprite.hpp"
-#include "gameEngine/Component/render/CTransform.hpp"
+#include <any>
 #include <cassert>
+#include <functional>
 #include <gameEngine/Component/physics/CGravity.hpp>
 #include <gameEngine/Component/physics/Physics.hpp>
 #include <gameEngine/Component/render/Render.hpp>
 
-#include <map>
 #include <raylib.h>
 #include <json_util.hpp>
 #include <string>
-#include <typeindex>
+#include <unordered_map>
 
 class ComponentRegistry {
-
 private:
-  std::map<std::string, std::type_index> registry;
-
+  ComponentRegistry() = default;
+  std::unordered_map<std::string, std::function<std::any(const json&)>> deserializers_;   
+  std::unordered_map<std::string, std::function<json(const std::any&)>> serializers_;
+  
 public:
-  ComponentRegistry() {
-    registry["CGravity"] = std::type_index(typeid(CGravity));
-    registry["CRigidBody"] = std::type_index(typeid(CRigidBody));
-    registry["CTransform"] = std::type_index(typeid(CTransform));
-    registry["CSprite"] = std::type_index(typeid(CSprite));
+
+  static ComponentRegistry& Instance() {
+    static ComponentRegistry instance;
+    return instance;
   }
 
-  inline const std::type_index &Get(const std::string &name) const {
-    const auto it = registry.find(name);
-    assert(it != registry.end() && "Invalid component call"); 
-    return it->second;
-  }
-};
+  template<typename T>
+  void Register(const std::string& name) {
 
-#include "gameEngine/Component/physics/CRigidBody.hpp"
-#include "gameEngine/Component/render/CSprite.hpp"
-#include "gameEngine/Component/render/CTransform.hpp"
-#include <cassert>
-#include <gameEngine/Component/physics/CGravity.hpp>
-#include <gameEngine/Component/physics/Physics.hpp>
-#include <gameEngine/Component/render/Render.hpp>
+    deserializers_[name] = [](const json& j) -> std::any {
+      return j.get<T>();
+    };
 
-#include <map>
-#include <raylib.h>
-#include <json_util.hpp>
-#include <string>
-#include <typeindex>
+    serializers_[name] = [](std::any& obj) -> json {
+      return nlohmann::json::object(
+        { 
+          {"type", typeid(T).name()}, 
+          {"data", std::any_cast<const T&>(obj)} 
+        }
+      );
+    };
 
-class ComponentRegistry {
-
-private:
-  std::map<std::string, std::type_index> registry;
-
-public:
-  ComponentRegistry() {
-    registry["CGravity"] = std::type_index(typeid(CGravity));
-    registry["CRigidBody"] = std::type_index(typeid(CRigidBody));
-    registry["CTransform"] = std::type_index(typeid(CTransform));
-    registry["CSprite"] = std::type_index(typeid(CSprite));
   }
 
-  inline const std::type_index &Get(const std::string &name) const {
-    const auto it = registry.find(name);
-    assert(it != registry.end() && "Invalid component call"); 
-    return it->second;
+
+  std::any Deserialize(const std::string& name, const json& j) {
+    return deserializers_.at(name)(j);
   }
+
+  nlohmann::json Serialize(const std::string& name, const std::any& obj) {
+    return serializers_.at(name)(obj);
+  }
+  
 };
