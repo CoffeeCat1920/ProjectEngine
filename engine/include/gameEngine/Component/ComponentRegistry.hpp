@@ -3,10 +3,7 @@
 #include <any>
 #include <cassert>
 #include <functional>
-#include <gameEngine/Component/physics/CGravity.hpp>
-#include <gameEngine/Component/physics/Physics.hpp>
-#include <gameEngine/Component/render/Render.hpp>
-
+#include <iostream>
 #include <raylib.h>
 #include <json_util.hpp>
 #include <string>
@@ -28,11 +25,13 @@ public:
   template<typename T>
   void Register(const std::string& name) {
 
+    std::cout << "Registering Component: \t" << name << "\n"; 
+
     deserializers_[name] = [](const json& j) -> std::any {
       return j.get<T>();
     };
 
-    serializers_[name] = [](std::any& obj) -> json {
+    serializers_[name] = [](const std::any& obj) -> json {
       return nlohmann::json::object(
         { 
           {"type", typeid(T).name()}, 
@@ -43,7 +42,6 @@ public:
 
   }
 
-
   std::any Deserialize(const std::string& name, const json& j) {
     return deserializers_.at(name)(j);
   }
@@ -53,3 +51,11 @@ public:
   }
   
 };
+
+#define REFLECTION(Type) \
+  struct Type##_Registrar {\
+    Type##_Registrar() {\
+      ComponentRegistry::Instance().Register<Type>(#Type);\
+    }\
+  };\
+  static Type##_Registrar Type##_registrar_;
