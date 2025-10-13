@@ -12,19 +12,27 @@ struct CTransform {
 };
 REFLECTION(CTransform);
 
+struct CRectangle {
+  float w = 12, h = 12;
+  CRectangle() = default; 
+  CRectangle(float w, float h) :
+    w(w),
+    h(h)
+  {}
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(CRectangle, w, h);
+};
+REFLECTION(CRectangle);
+
 struct CSprite {
   std::filesystem::path path = "";
   Texture2D texture;
-
-  CSprite(std::filesystem::path p) : path(std::move(p)) {
-    texture = LoadTexture(path.c_str());
-  }
+  CSprite(std::filesystem::path p) : 
+    path(std::move(p)) 
+  {}
 
   CSprite() {
     path = "./assets/bird.png";
-    texture = LoadTexture(path.c_str());
   }
-
 }; 
 
 inline void to_json(json& j, const CSprite& s) {
@@ -33,6 +41,5 @@ inline void to_json(json& j, const CSprite& s) {
 
 inline void from_json(const json& j, CSprite& s) {
   s.path = j.at("path").get<std::string>();
-  s.texture = LoadTexture(s.path.c_str());
 }
 REFLECTION(CSprite);

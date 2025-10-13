@@ -64,17 +64,17 @@ public:
     InitWindow(windowConfig.rendering_width(), windowConfig.rendering_height(), title.c_str());
     SetTargetFPS(60);
 
-    gEcs.RegisterComponent<CGravity>();
-    gEcs.RegisterComponent<CRigidBody>();
-    gEcs.RegisterComponent<CTransform>();
-    gEcs.RegisterComponent<CSprite>();
+    // gEcs.RegisterComponent<CGravity>();
+    // gEcs.RegisterComponent<CRigidBody>();
+    // gEcs.RegisterComponent<CTransform>();
+    // gEcs.RegisterComponent<CSprite>();
 
     // TODO: Make a util method in ECS class
     physicsSystem = gEcs.RegisterSystem<SPhysics>();
     gEcs.SetSystemSignature<SPhysics, CGravity, CTransform, CRigidBody>();
 
     renderSystem = gEcs.RegisterSystem<SRender>();
-    gEcs.SetSystemSignature<SRender, CTransform, CSprite>();
+    gEcs.SetSystemSignature<SRender, CTransform, CRectangle>();
   }
 
   template<typename... Components>

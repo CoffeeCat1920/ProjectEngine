@@ -1,5 +1,8 @@
 #pragma once
 
+#include "core/colors.hpp"
+#include "gameEngine/Component/render/Render.hpp"
+#include "raylib.h"
 #include <ECS/ECS.h>
 #include <ECS/utils/signatures.hpp>
 #include <gameEngine/Component/Component.hpp>
@@ -25,9 +28,9 @@ struct SRender : System {
   ECS& gEcs = ECS::Instance();
   void Update() {
     for (const auto& entity : System::entities) {
-      auto& sprite = gEcs.GetComponent<CSprite>(entity);
+      auto& rectangle = gEcs.GetComponent<CRectangle>(entity);
       auto& transform = gEcs.GetComponent<CTransform>(entity);
-      DrawTexture(sprite.texture, transform.position.x, transform.position.y, WHITE);
+      DrawRectangle(transform.position.x, transform.position.y, rectangle.w * transform.scale.x, rectangle.h * transform.scale.y, GRUVBOX_RED);
     }
   }
 };

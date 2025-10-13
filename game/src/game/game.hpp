@@ -1,4 +1,5 @@
 #pragma once
+#include "gameEngine/Component/render/Render.hpp"
 #include <cstdint>
 #include<gameEngine/gameEngine.hpp>
 
@@ -25,7 +26,7 @@ public:
         CGravity{.force = Vector2{0, gravityY}},
         CTransform{.position = Vector2{posX, posY}, .scale = Vector2{size, size}},
         CRigidBody{.velocity = Vector2{0.0f, 0.0f}, .acceleration = Vector2{0.0f, 0.0f}},
-        CSprite{}
+        CRectangle{}
       );
 
     }

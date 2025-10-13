@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ECS/ECS.h"
 #include <any>
 #include <cassert>
 #include <functional>
@@ -14,6 +15,7 @@ private:
   ComponentRegistry() = default;
   std::unordered_map<std::string, std::function<std::any(const json&)>> deserializers_;   
   std::unordered_map<std::string, std::function<json(const std::any&)>> serializers_;
+  ECS& gEcs = ECS::Instance();
   
 public:
 
@@ -25,7 +27,7 @@ public:
   template<typename T>
   void Register(const std::string& name) {
 
-    std::cout << "Registering Component: \t" << name << "\n"; 
+    std::cout << "Registering Component: \t" << typeid(T).name() << "\n"; 
 
     deserializers_[name] = [](const json& j) -> std::any {
       return j.get<T>();
@@ -39,7 +41,7 @@ public:
         }
       );
     };
-
+    gEcs.RegisterComponent<T>();
   }
 
   std::any Deserialize(const std::string& name, const json& j) {
