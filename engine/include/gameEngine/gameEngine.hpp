@@ -1,4 +1,6 @@
 #pragma once
+#include "SystemRegistry/SystemRegistry.hpp"
+#include <cstdlib>
 #include <filesystem>
 #include <ComponentRegistry/Component.hpp>
 #include <SystemRegistry/System.hpp>
@@ -38,11 +40,9 @@ class GameEngine {
 private:
   WindowConfig windowConfig;
   ECS& gEcs = ECS::Instance();
+  SystemRegistry& systemRegistery = SystemRegistry::Instance();
   std::string title = "Window";
   CameraController cameraController;
-
-  std::shared_ptr<SPhysics> physicsSystem;
-  std::shared_ptr<SRender> renderSystem;
 
   explicit GameEngine(const WindowConfig& config = {}, const std::string& title = "Window") : 
     windowConfig(config),
@@ -64,10 +64,6 @@ public:
   void Init() {
     InitWindow(windowConfig.rendering_width(), windowConfig.rendering_height(), title.c_str());
     SetTargetFPS(60);
-
-    // TODO: Make a util method in ECS class
-    physicsSystem = gEcs.RegisterSystemWithSignatures<SPhysics, CGravity, CTransform, CRigidBody>();
-    renderSystem = gEcs.RegisterSystemWithSignatures<SRender, CTransform, CRectangle>();
   }
 
   template<typename... Components>
@@ -77,14 +73,12 @@ public:
     return entity;
   }
 
-  void LoadScene(const std::filesystem::path& filePath) {}
-
   void BeginFrame() {
-    physicsSystem->Update();
+    systemRegistery.PhysicsUpdate();
     BeginDrawing();
     ClearBackground(BACKGROUND);
     BeginMode2D(cameraController.GetCamera());
-    renderSystem->Update();
+    systemRegistery.RenderUpdate();
   }
 
   void EndFrame() {

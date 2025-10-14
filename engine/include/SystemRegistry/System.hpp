@@ -9,7 +9,7 @@
 
 struct SPhysics : System {
   ECS& gEcs = ECS::Instance();
-  void Update() {
+  void Update() override {
     for (const auto& entity : System::entities) {
       auto& rigidBody = gEcs.GetComponent<CRigidBody>(entity);
       auto& transform = gEcs.GetComponent<CTransform>(entity);
@@ -23,11 +23,11 @@ struct SPhysics : System {
     }
   }
 };
-SYSTEM_PHYSICS_REGISTERATION(SPhysics);
+REGISTER_SYSTEM(SPhysics, Physics)
 
 struct SRender : System {
   ECS& gEcs = ECS::Instance();
-  void Update() {
+  void Update() override {
     for (const auto& entity : System::entities) {
       auto& rectangle = gEcs.GetComponent<CRectangle>(entity);
       auto& transform = gEcs.GetComponent<CTransform>(entity);
@@ -35,4 +35,4 @@ struct SRender : System {
     }
   }
 };
-SYSTEM_RENDER_REGISTERATION(SRender); 
+REGISTER_SYSTEM(SRender, Render)
