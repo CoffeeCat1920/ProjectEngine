@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ECS/ECS.h"
+#include <ECS/ECS.h>
 #include <any>
 #include <cassert>
 #include <functional>

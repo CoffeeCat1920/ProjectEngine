@@ -16,6 +16,7 @@ using SystemId = size_t;
 struct System {
   std::set<Entity> entities;
   Signature signature;
+  virtual void Update() = 0;
 };
 
 class SystemManager {

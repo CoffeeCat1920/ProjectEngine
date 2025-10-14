@@ -26,7 +26,7 @@
         - [-] Macro Based Refelction 
             - [X] Create the component registry
             - [X] Register all the component through it
-            - [-] Register component in most ECS and registry
+            - [X] Register component in both ECS and registry
             - [ ] Automatically creating to and from json functionality
 
 - [ ] Refactoring

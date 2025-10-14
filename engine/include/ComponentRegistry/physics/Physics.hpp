@@ -2,7 +2,7 @@
 
 #include <json_util.hpp>
 #include <raylib.h>
-#include <gameEngine/Component/ComponentRegistry.hpp>
+#include <ComponentRegistry/ComponentRegistry.hpp>
 
 inline void to_json(json& j, const Vector2& v) {
   j = json{ 

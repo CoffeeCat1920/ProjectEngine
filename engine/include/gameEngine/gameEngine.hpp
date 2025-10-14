@@ -1,6 +1,7 @@
 #pragma once
-#include <gameEngine/Component/Component.hpp>
-#include <gameEngine/System/System.hpp>
+#include <filesystem>
+#include <ComponentRegistry/Component.hpp>
+#include <SystemRegistry/System.hpp>
 #include <core/colors.hpp>
 #include <core/setting.hpp>
 #include <ECS/ECS.h>
@@ -64,17 +65,9 @@ public:
     InitWindow(windowConfig.rendering_width(), windowConfig.rendering_height(), title.c_str());
     SetTargetFPS(60);
 
-    // gEcs.RegisterComponent<CGravity>();
-    // gEcs.RegisterComponent<CRigidBody>();
-    // gEcs.RegisterComponent<CTransform>();
-    // gEcs.RegisterComponent<CSprite>();
-
     // TODO: Make a util method in ECS class
-    physicsSystem = gEcs.RegisterSystem<SPhysics>();
-    gEcs.SetSystemSignature<SPhysics, CGravity, CTransform, CRigidBody>();
-
-    renderSystem = gEcs.RegisterSystem<SRender>();
-    gEcs.SetSystemSignature<SRender, CTransform, CRectangle>();
+    physicsSystem = gEcs.RegisterSystemWithSignatures<SPhysics, CGravity, CTransform, CRigidBody>();
+    renderSystem = gEcs.RegisterSystemWithSignatures<SRender, CTransform, CRectangle>();
   }
 
   template<typename... Components>
@@ -84,12 +77,7 @@ public:
     return entity;
   }
 
-  template<typename TSystem, typename... Components>
-  std::shared_ptr<TSystem> RegisterSystem() {
-    auto system = gEcs.RegisterSystem<TSystem>();
-    gEcs.SetSystemSignature<TSystem, Components...>();
-    return system;
-  }
+  void LoadScene(const std::filesystem::path& filePath) {}
 
   void BeginFrame() {
     physicsSystem->Update();

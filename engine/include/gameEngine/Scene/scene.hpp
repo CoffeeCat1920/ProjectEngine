@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/setting.hpp"
-#include "gameEngine/Component/Component.hpp"
+#include <ComponentRegistry/Component.hpp>
 #include <cstdint>
 #include <filesystem>
 #include <stack>

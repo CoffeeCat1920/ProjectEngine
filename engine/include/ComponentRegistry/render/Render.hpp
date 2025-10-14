@@ -1,13 +1,13 @@
 #pragma once
 
-#include "gameEngine/Component/ComponentRegistry.hpp"
+#include "ComponentRegistry/ComponentRegistry.hpp"
 #include "json.hpp"
 #include <raylib.h>
 #include <json_util.hpp>
 
 struct CTransform {
-  Vector2 position{};
-  Vector2 scale{};
+  Vector2 position{0, 0};
+  Vector2 scale{1, 1};
   NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(CTransform, position, scale)
 };
 REFLECTION(CTransform);
