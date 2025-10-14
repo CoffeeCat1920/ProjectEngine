@@ -19,22 +19,39 @@ public:
   SystemRegistery(SystemRegistery&&) = delete;
   SystemRegistery& operator=(SystemRegistery&&) = delete;
 
-  template<typename T> 
-  void RegisterPhysicsSystem() {
-    const std::string name = typeid(T).name();  
-    assert(physicsSystemsRegister.find(name) == physicsSystemsRegister.end() && "System already registered");
-    auto system = std::make_shared<T>();
-    physicsSystemsRegister[name] = system;
-    return system;
+  static SystemRegistery& Instance() {
+    static SystemRegistery systemRegistry;
+    return systemRegistry;
   }
 
   template<typename T> 
-  void RegisterRenderSystem() {
-    const std::string name = typeid(T).name();  
+  void RegisterPhysicsSystem(const std::string& name) {
     assert(physicsSystemsRegister.find(name) == physicsSystemsRegister.end() && "System already registered");
     auto system = std::make_shared<T>();
     physicsSystemsRegister[name] = system;
-    return system;
+  }
+
+  template<typename T> 
+  void RegisterRenderSystem(const std::string& name) {
+    assert(physicsSystemsRegister.find(name) == physicsSystemsRegister.end() && "System already registered");
+    auto system = std::make_shared<T>();
+    physicsSystemsRegister[name] = system;
   }
 
 }; 
+
+#define SYSTEM_PHYSICS_REGISTERATION(TYPE)\
+  struct TYPE##_REGISTERER {\
+    TYPE##_REGISTERER() {\
+      SystemRegistery::Instance().RegisterPhysicsSystem<TYPE>(#TYPE);\
+    }\
+  };\
+  static TYPE##_REGISTERER TYPE##_REGISTERER_;
+
+#define SYSTEM_RENDER_REGISTERATION(TYPE)\
+  struct TYPE##_REGISTERER {\
+    TYPE##_REGISTERER() {\
+      SystemRegistery::Instance().RegisterRenderSystem<TYPE>(#TYPE);\
+    }\
+  };\
+  static TYPE##_REGISTERER TYPE##_REGISTERER_;

@@ -1,10 +1,11 @@
 #pragma once
 
-#include "core/colors.hpp"
+#include <raylib.h>
+#include <core/colors.hpp>
 #include <ComponentRegistry/Component.hpp>
-#include "raylib.h"
 #include <ECS/ECS.h>
 #include <ECS/utils/signatures.hpp>
+#include <SystemRegistry/SystemRegistry.hpp>
 
 struct SPhysics : System {
   ECS& gEcs = ECS::Instance();
@@ -22,6 +23,7 @@ struct SPhysics : System {
     }
   }
 };
+SYSTEM_PHYSICS_REGISTERATION(SPhysics);
 
 struct SRender : System {
   ECS& gEcs = ECS::Instance();
@@ -33,3 +35,4 @@ struct SRender : System {
     }
   }
 };
+SYSTEM_RENDER_REGISTERATION(SRender); 
