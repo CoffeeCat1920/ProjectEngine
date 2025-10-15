@@ -81,7 +81,8 @@ public:
 
   template<typename Component>
   ComponentId GetComponentId() {
-    return componentManager->GetComponentId<Component>();
+    const ComponentId& sig = componentManager->GetComponentId<Component>();
+    return sig;
   }
 
   template<typename... Components> 

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ComponentRegistry/physics/Physics.hpp"
+#include "ComponentRegistry/render/Render.hpp"
+#include "ECS/system/system.hpp"
 #include <raylib.h>
 #include <core/colors.hpp>
 #include <ComponentRegistry/Component.hpp>
@@ -23,7 +26,7 @@ struct SPhysics : System {
     }
   }
 };
-REGISTER_SYSTEM(SPhysics, Physics)
+REGISTER_SYSTEM(SPhysics, Physics, CGravity, CRigidBody, CTransform);
 
 struct SRender : System {
   ECS& gEcs = ECS::Instance();
@@ -35,4 +38,4 @@ struct SRender : System {
     }
   }
 };
-REGISTER_SYSTEM(SRender, Render)
+REGISTER_SYSTEM(SRender, Render, CRectangle, CTransform);

@@ -1,5 +1,6 @@
 #pragma once
 #include <ECS/component/component.hpp>
+#include <iostream>
 
 namespace signatureUtils {
 
@@ -13,6 +14,7 @@ inline Signature GetSignature(std::initializer_list<ComponentId> componentIds) {
   Signature signature;
   for (auto id : componentIds) {
       signature.set(id);
+      std::cout << "Getting Signature\n";
   }
   return signature;
 }

@@ -1,7 +1,5 @@
 #pragma once
 #include "SystemRegistry/SystemRegistry.hpp"
-#include <cstdlib>
-#include <filesystem>
 #include <ComponentRegistry/Component.hpp>
 #include <SystemRegistry/System.hpp>
 #include <core/colors.hpp>

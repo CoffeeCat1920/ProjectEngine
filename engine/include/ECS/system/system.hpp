@@ -6,6 +6,7 @@
 #include <cassert>
 #include <cstddef>
 #include <initializer_list>
+#include <iostream>
 #include <memory>
 #include <pstl/glue_algorithm_defs.h>
 #include <string>
@@ -32,6 +33,7 @@ public:
     assert(systems.find(typeName) == systems.end() && "Registering system more than once.");
     auto system = std::make_shared<T>();
     systems.insert({typeName, system});
+    std::cout << "Registered system: " << typeName << "\n";
     return system;
   }
 
@@ -58,6 +60,7 @@ public:
     auto system = systems.find(typeName);
     assert(system != systems.end() && "System used before registering");
     Signature signature = signatureUtils::GetSignature(componentIds);
+    std::cout << "Setting signature:" << signature << " for component " << typeName << std::endl;
     system->second->signature = signature;
   }
 
