@@ -3,6 +3,7 @@
 #include <ECS/component/component.hpp>
 #include <ECS/entity/entity.hpp>
 #include <ECS/system/system.hpp>
+#include <iostream>
 #include <memory>
 #include <utility>
 
@@ -32,6 +33,7 @@ public:
   }
 
   Entity AddEntity(std::string name) {
+    std::cout << "Added Entity\n";
     return entityManager->CreateEntity(name);
   }
 
@@ -48,6 +50,7 @@ public:
  
   template<typename Component>
   void AddComponent(Entity entity, Component component) {
+    std::cout << "Adding a component to entity " << entity << "\n";
     componentManager->AddComponent<Component>(entity, component);
 
     Signature signature = componentManager->GetSignature(entity); 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ECS/entity/entity.hpp"
 #include <ECS/ECS.h>
 #include <any>
 #include <cassert>
@@ -15,6 +16,7 @@ private:
   ComponentRegistry() = default;
   std::unordered_map<std::string, std::function<std::any(const json&)>> deserializers_;   
   std::unordered_map<std::string, std::function<json(const std::any&)>> serializers_;
+  std::unordered_map<std::string, std::function<void(Entity, const json&)>> componentAdders_;
   ECS& gEcs = ECS::Instance();
   
 public:
@@ -41,7 +43,16 @@ public:
         }
       );
     };
+
+    componentAdders_[name] = [this](Entity entity, const json& componentJson) {
+      T comp = componentJson.get<T>(); 
+      gEcs.AddComponent(entity, comp);
+    };
     gEcs.RegisterComponent<T>();
+  }
+
+  void AddComponent(Entity entity, const std::string& name, const json& j) {
+    componentAdders_.at(name)(entity, j);
   }
 
   std::any Deserialize(const std::string& name, const json& j) {

@@ -1,4 +1,5 @@
 #pragma once
+#include "Scene/Scene.hpp"
 #include "SystemRegistry/SystemRegistry.hpp"
 #include <ComponentRegistry/Component.hpp>
 #include <SystemRegistry/System.hpp>
@@ -9,6 +10,7 @@
 #include <ECS/entity/entity.hpp>
 #include <ECS/component/component.hpp>
 #include <cameraController/cameraController.hpp>
+#include <filesystem>
 #include <raylib.h>
 #include <string>
 
@@ -69,6 +71,10 @@ public:
     Entity entity = gEcs.AddEntity(name);
     gEcs.AddComponent(entity, std::forward<Components>(comps)...);
     return entity;
+  }
+
+  void LoadScene(std::filesystem::path scenePath) {
+    Scene scene(scenePath);
   }
 
   void BeginFrame() {
