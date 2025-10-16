@@ -55,9 +55,11 @@ public:
 };
 
 #define REFLECTION(Type) \
-  struct Type##_Registrar {\
-    Type##_Registrar() {\
-      ComponentRegistry::Instance().Register<Type>(#Type);\
-    }\
-  };\
-  static Type##_Registrar Type##_registrar_;
+  namespace {\
+    struct Type##_Registrar {\
+      Type##_Registrar() {\
+        ComponentRegistry::Instance().Register<Type>(#Type);\
+      }\
+    };\
+    static Type##_Registrar Type##_registrar_;\
+  }
