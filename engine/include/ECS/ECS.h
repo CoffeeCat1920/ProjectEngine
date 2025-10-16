@@ -90,7 +90,6 @@ public:
     (componentManager->RemoveComponent<Components>(entity), ...);
   }
 
-
   template<typename System>
   void SetSystemSignature(Signature signature) {
     systemManager->SetSignature<System>(signature);
@@ -99,6 +98,11 @@ public:
   template<typename System>
   void SetSystemSignature(ComponentId componentId) {
     systemManager->SetSignature<System>(componentId);
+  }
+
+  template<typename System>
+  std::shared_ptr<System> GetSystem() {
+    return systemManager->GetSystem<System>();
   }
 
   template<typename System, typename... Components>

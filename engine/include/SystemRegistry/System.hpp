@@ -3,6 +3,7 @@
 #include "ComponentRegistry/physics/Physics.hpp"
 #include "ComponentRegistry/render/Render.hpp"
 #include "ECS/system/system.hpp"
+#include <iostream>
 #include <raylib.h>
 #include <core/colors.hpp>
 #include <ComponentRegistry/Component.hpp>
@@ -27,6 +28,11 @@ struct SPhysics : System {
   }
 };
 REGISTER_SYSTEM(SPhysics, Physics, CGravity, CRigidBody, CTransform);
+
+        // CGravity{.force = Vector2{0, gravityY}},
+        // CTransform{.position = Vector2{posX, posY}, .scale = Vector2{size, size}},
+        // CRigidBody{.velocity = Vector2{0.0f, 0.0f}, .acceleration = Vector2{0.0f, 0.0f}},
+        // CRectangle{}
 
 struct SRender : System {
   ECS& gEcs = ECS::Instance();

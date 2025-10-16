@@ -26,8 +26,8 @@ private:
     void RegisterSystemImpl(const std::string& name, SystemType type) {
         auto& reg = (type == SystemType::Physics) ? physicsSystemsRegister : renderSystemsRegister;
         assert(reg.find(name) == reg.end() && "System already registered");
-        auto system = std::make_shared<T>();
         gECS.RegisterSystemWithSignatures<T, Components...>();
+        auto system = gECS.GetSystem<T>();
         reg[name] = system;
     }
 
@@ -51,7 +51,9 @@ public:
     }
 
     void PhysicsUpdate() {
-      for (auto& [_, sys] : physicsSystemsRegister) sys->Update();
+      for (auto& [_, sys] : physicsSystemsRegister) {
+        sys->Update();
+      }
     } 
 
     void RenderUpdate() {

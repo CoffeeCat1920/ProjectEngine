@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include<gameEngine/gameEngine.hpp>
+#include <iostream>
 
 class Game {
 private:
@@ -27,7 +28,6 @@ public:
         CRigidBody{.velocity = Vector2{0.0f, 0.0f}, .acceleration = Vector2{0.0f, 0.0f}},
         CRectangle{}
       );
-
     }
   }
 
@@ -35,9 +35,6 @@ public:
     while (!WindowShouldClose()) {
       engine.BeginFrame();
       engine.EndFrame();
-
-      // TODO: Implement this thing
-      // engine.LoadScene("./assets/scene.json");
     }
 
     engine.Shutdown();

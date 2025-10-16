@@ -18,6 +18,11 @@ struct System {
   std::set<Entity> entities;
   Signature signature;
   virtual void Update() = 0;
+  void PrintEntities() {
+    for (const auto& entity : entities) {
+      std::cout << entity << std::endl;
+    }
+  }
 };
 
 class SystemManager {
@@ -36,6 +41,13 @@ public:
     std::cout << "Registered system: " << typeName << "\n";
     return system;
   }
+
+  template <typename T> 
+  std::shared_ptr<T> GetSystem() {
+    const std::string typeName = typeid(T).name();
+    assert(systems.find(typeName) != systems.end() && "System not Registering.");
+    return std::static_pointer_cast<T>(systems.at(typeName));
+  } 
 
   template <typename T>
   void SetSignature(Signature signature) {
@@ -60,7 +72,6 @@ public:
     auto system = systems.find(typeName);
     assert(system != systems.end() && "System used before registering");
     Signature signature = signatureUtils::GetSignature(componentIds);
-    std::cout << "Setting signature:" << signature << " for component " << typeName << std::endl;
     system->second->signature = signature;
   }
 
