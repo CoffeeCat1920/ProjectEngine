@@ -1,10 +1,11 @@
 {
     "entities": [
+       
       {
         "name" : "test",
         "components": {
           "CGravity": {
-            "force": { "x": 0.0, "y": 1 }
+            "force": { "x": 0.0, "y": 0.0 }
           },
           "CTransform": {
             "position": { "x": 64, "y": 64.0 },
@@ -21,6 +22,30 @@
             "path": "./assets/bird.png"
           }
         }
+      },
+
+      {
+        "name" : "test",
+        "components": {
+          "CGravity": {
+            "force": { "x": 0.0, "y": 0.0 }
+          },
+          "CTransform": {
+            "position": { "x": 32.0, "y": 64.0 },
+            "scale": { "x": 1.0, "y": 1.0 }
+          },
+          "CRigidBody": {
+            "velocity": { "x": 0.0, "y": 0.0 },
+            "acceleration": { "x": 0.0, "y": 0.0 }
+          },
+          "CRectangle": {
+            "rectangle": { "w": 16.0, "h": 16.0 }
+          },
+          "CSprite": {
+            "path": "./assets/bird.png"
+          }
+        }
       }
+
     ]
 }
