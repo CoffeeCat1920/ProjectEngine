@@ -1,13 +1,13 @@
-#include <core/setting.hpp>
 #include <ECS/entity/entity.hpp>
-#include <cassert>
-#include <string>
 #include <algorithm>
+#include <cassert>
+#include <core/setting.hpp>
+#include <string>
 
 EntityManager::EntityManager() {
   for (int entity = 0; entity < (int)MAX_ENTITIES; entity++) {
     availableEntites.push(entity);
-  } 
+  }
 }
 
 std::string EntityManager::GetName(Entity entity) {
@@ -16,19 +16,18 @@ std::string EntityManager::GetName(Entity entity) {
   return it->second;
 }
 
-const EntityVec& EntityManager::GetEntities(std::string name) {
+const EntityVec &EntityManager::GetEntities(std::string name) {
   auto it = nameToEntities.find(name);
-  assert(it != nameToEntities.end() && ("None entity registered with requested Name" + name).c_str());
+  assert(it != nameToEntities.end() &&
+         ("None entity registered with requested Name" + name).c_str());
   return it->second;
 }
 
-const EntityVec& EntityManager::GetEntities() const {
-  return livingEntites;
-}
+const EntityVec &EntityManager::GetEntities() const { return livingEntites; }
 
 Entity EntityManager::CreateEntity(std::string name) {
   assert(LivingEntityCount < MAX_ENTITIES && "Too many Entities");
-  
+
   Entity entity = availableEntites.front();
   entityToNames.insert({entity, name});
   availableEntites.pop();
@@ -39,14 +38,13 @@ Entity EntityManager::CreateEntity(std::string name) {
 }
 
 void EntityManager::EntityDestroyed(Entity entity) {
-  assert(entity < MAX_ENTITIES && "Invalid Entity"); 
+  assert(entity < MAX_ENTITIES && "Invalid Entity");
 
   availableEntites.push(entity);
   entityToNames.erase(entity);
   livingEntites.erase(
-    std::remove(livingEntites.begin(), livingEntites.end(), entity),
-    livingEntites.end()
-  );
+      std::remove(livingEntites.begin(), livingEntites.end(), entity),
+      livingEntites.end());
   --LivingEntityCount;
 
   return;

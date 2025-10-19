@@ -2,14 +2,14 @@
 #include "Scene/Scene.hpp"
 #include "SystemRegistry/SystemRegistry.hpp"
 #include <ComponentRegistry/Component.hpp>
+#include <ECS/ECS.h>
+#include <ECS/component/component.hpp>
+#include <ECS/entity/entity.hpp>
+#include <ECS/system/system.hpp>
 #include <SystemRegistry/System.hpp>
+#include <cameraController/cameraController.hpp>
 #include <core/colors.hpp>
 #include <core/setting.hpp>
-#include <ECS/ECS.h>
-#include <ECS/system/system.hpp>
-#include <ECS/entity/entity.hpp>
-#include <ECS/component/component.hpp>
-#include <cameraController/cameraController.hpp>
 #include <filesystem>
 #include <raylib.h>
 #include <string>
@@ -22,60 +22,52 @@ struct WindowConfig {
 
   WindowConfig() = default;
   WindowConfig(int block, int w, int h, int s = DEFAULT_SCALE)
-    : blockSize(block),
-      width(w),
-      height(h),
-      scale(s) {}
+      : blockSize(block), width(w), height(h), scale(s) {}
 
-  int rendering_width() const {
-    return width * blockSize * scale;
-  }
+  int rendering_width() const { return width * blockSize * scale; }
 
-  int rendering_height() const {
-    return height * blockSize * scale;
-  }
+  int rendering_height() const { return height * blockSize * scale; }
 };
 
 class GameEngine {
 private:
   WindowConfig windowConfig;
-  ECS& gEcs = ECS::Instance();
-  SystemRegistry& systemRegistery = SystemRegistry::Instance();
+  ECS &gEcs = ECS::Instance();
+  SystemRegistry &systemRegistery = SystemRegistry::Instance();
   std::string title = "Window";
   CameraController cameraController;
 
-  explicit GameEngine(const WindowConfig& config = {}, const std::string& title = "Window") : 
-    windowConfig(config),
-    title(title),
-    cameraController(windowConfig.scale) 
-  {}
-  
-public:
-  GameEngine(const GameEngine&) = delete;
-  GameEngine& operator=(const GameEngine&) = delete;
-  GameEngine(GameEngine&&) = delete;
-  GameEngine& operator=(GameEngine&&) = delete;
+  explicit GameEngine(const WindowConfig &config = {},
+                      const std::string &title = "Window")
+      : windowConfig(config), title(title),
+        cameraController(windowConfig.scale) {}
 
-  static GameEngine& Instance(const WindowConfig& config = {}, const std::string& title = "Window") {
+public:
+  GameEngine(const GameEngine &) = delete;
+  GameEngine &operator=(const GameEngine &) = delete;
+  GameEngine(GameEngine &&) = delete;
+  GameEngine &operator=(GameEngine &&) = delete;
+
+  static GameEngine &Instance(const WindowConfig &config = {},
+                              const std::string &title = "Window") {
     static GameEngine instance(config, title);
     return instance;
   }
 
   void Init() {
-    InitWindow(windowConfig.rendering_width(), windowConfig.rendering_height(), title.c_str());
+    InitWindow(windowConfig.rendering_width(), windowConfig.rendering_height(),
+               title.c_str());
     SetTargetFPS(60);
   }
 
-  template<typename... Components>
-  Entity CreateEntity(const std::string& name, Components&&... comps) {
+  template <typename... Components>
+  Entity CreateEntity(const std::string &name, Components &&...comps) {
     Entity entity = gEcs.AddEntity(name);
     gEcs.AddComponent(entity, std::forward<Components>(comps)...);
     return entity;
   }
 
-  void LoadScene(std::filesystem::path scenePath) {
-    Scene scene(scenePath);
-  }
+  void LoadScene(std::filesystem::path scenePath) { Scene scene(scenePath); }
 
   void BeginFrame() {
     systemRegistery.PhysicsUpdate();
@@ -92,22 +84,13 @@ public:
     std::string fpsText = "FPS: " + std::to_string(fps);
     int textWidth = MeasureText(fpsText.c_str(), 20);
 
-    DrawText(
-      fpsText.c_str(),
-      windowConfig.rendering_width() - textWidth - 10,
-      10,
-      20,
-      GRUVBOX_AQUA
-    );
+    DrawText(fpsText.c_str(), windowConfig.rendering_width() - textWidth - 10,
+             10, 20, GRUVBOX_AQUA);
 
     EndDrawing();
   }
 
-  void Shutdown() {
-    CloseWindow();
-  }
+  void Shutdown() { CloseWindow(); }
 
-  const WindowConfig& GetConfig() const {
-    return windowConfig;
-  }
+  const WindowConfig &GetConfig() const { return windowConfig; }
 };

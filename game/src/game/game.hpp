@@ -1,14 +1,13 @@
 #pragma once
-#include<gameEngine/gameEngine.hpp>
+#include <gameEngine/gameEngine.hpp>
 
 class Game {
 private:
-  GameEngine& engine;
+  GameEngine &engine;
 
 public:
-  explicit Game(const WindowConfig& config) :
-    engine(GameEngine::Instance(config, "Stayyy With Mee")) 
-  {}
+  explicit Game(const WindowConfig &config)
+      : engine(GameEngine::Instance(config, "Stayyy With Mee")) {}
 
   void Init() {
     engine.Init();
