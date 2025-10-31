@@ -31,10 +31,10 @@ struct WindowConfig {
 
 class GameEngine {
 private:
-  WindowConfig windowConfig;
   ECS &gEcs = ECS::Instance();
   SystemRegistry &systemRegistery = SystemRegistry::Instance();
-  std::string title = "Window";
+  WindowConfig windowConfig;
+  std::string title;
   CameraController cameraController;
 
   explicit GameEngine(const WindowConfig &config = {},
@@ -90,7 +90,7 @@ public:
     EndDrawing();
   }
 
-  void Shutdown() { CloseWindow(); }
+  ~GameEngine() { CloseWindow(); }
 
   const WindowConfig &GetConfig() const { return windowConfig; }
 };

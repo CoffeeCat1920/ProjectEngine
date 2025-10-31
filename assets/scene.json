@@ -1,6 +1,5 @@
 {
     "entities": [
-       
       {
         "name" : "test",
         "components": {
@@ -12,7 +11,7 @@
             "scale": { "x": 1.0, "y": 1.0 }
           },
           "CRigidBody": {
-            "velocity": { "x": 0.0, "y": 0.0 },
+            "velocity": { "x": 0.0, "y": 1.0 },
             "acceleration": { "x": 0.0, "y": 0.0 }
           },
           "CRectangle": {
@@ -28,7 +27,7 @@
         "name" : "test",
         "components": {
           "CGravity": {
-            "force": { "x": 0.0, "y": 0.0 }
+            "force": { "x": 0.0, "y": 1 }
           },
           "CTransform": {
             "position": { "x": 32.0, "y": 64.0 },

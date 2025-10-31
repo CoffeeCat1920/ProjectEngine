@@ -19,7 +19,5 @@ public:
       engine.BeginFrame();
       engine.EndFrame();
     }
-
-    engine.Shutdown();
   }
 };
