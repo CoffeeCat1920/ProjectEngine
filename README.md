@@ -18,16 +18,16 @@
     - [X] I think all default systems be always present. I hope it doesn't becomes any issue though.
     - [X] Move the Signature to System base
 
-- [-] Scene Management
+- [X] Scene Management
     - [X] Make a util method in ECS class
     - [X] Entity Serilization 
     - [X] Entity Desiilization
-    - [-] Scene struct 
-        - [-] Macro Based Refelction 
+    - [X] Scene struct 
+        - [X] Macro Based Refelction 
             - [X] Create the component registry
             - [X] Register all the component through it
             - [X] Register component in both ECS and registry
-            - [ ] Automatically creating to and from json functionality
+            - [X] Automatically creating to and from json functionality
 
 - [ ] Refactoring
     - [ ] Fix the typeid(T).name problem
