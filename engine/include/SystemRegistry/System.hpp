@@ -35,7 +35,7 @@ struct SRender : System {
       auto &rectangle = gEcs.GetComponent<CRectangle>(entity);
       auto &transform = gEcs.GetComponent<CTransform>(entity);
       DrawRectangle(transform.position.x, transform.position.y, rectangle.w,
-                    rectangle.h, GRUVBOX_RED);
+                    rectangle.h, RED);
     }
   }
 };

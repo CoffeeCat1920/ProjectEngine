@@ -32,8 +32,8 @@ struct WindowConfig {
 class GameEngine {
 private:
   ECS &gEcs = ECS::Instance();
-  SystemRegistry &systemRegistery = SystemRegistry::Instance();
   WindowConfig windowConfig;
+  SystemRegistry &systemRegistery = SystemRegistry::Instance();
   std::string title;
   CameraController cameraController;
 
@@ -70,7 +70,6 @@ public:
   void LoadScene(std::filesystem::path scenePath) { Scene scene(scenePath); }
 
   void BeginFrame() {
-    systemRegistery.PhysicsUpdate();
     BeginDrawing();
     ClearBackground(BACKGROUND);
     BeginMode2D(cameraController.GetCamera());
@@ -88,6 +87,7 @@ public:
              10, 20, GRUVBOX_AQUA);
 
     EndDrawing();
+    systemRegistery.PhysicsUpdate();
   }
 
   ~GameEngine() { CloseWindow(); }

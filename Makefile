@@ -2,7 +2,7 @@
 # Project Configuration
 # ===========================
 CXX       := g++
-CXXFLAGS  := -Wall -Wextra -std=c++17 -MMD -MP \
+CXXFLAGS  := -Wall -Wextra -std=c++17 -MMD -MP -g -O2 -fno-omit-frame-pointer\
              -Iengine/include -Ivendor/raylib/include -Ivendor/json/include -Igame/include
 
 LDFLAGS   := -Lvendor/raylib/lib -Lengine/lib 
