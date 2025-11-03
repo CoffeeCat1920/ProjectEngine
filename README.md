@@ -28,10 +28,8 @@
             - [X] Register all the component through it
             - [X] Register component in both ECS and registry
             - [X] Automatically creating to and from json functionality
-
-- [ ] Refactoring
-    - [ ] Fix the typeid(T).name problem
-
+- [ ] Shifting the project to be using Cmake instead of make. 
+- [-] Adding Support for Lua
 - [ ] Asset Management.
 - [ ] Agnostic Input handeling.
     - [ ] Systems layer input defination

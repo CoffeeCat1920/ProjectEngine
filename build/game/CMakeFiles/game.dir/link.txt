@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/game.dir/link.d CMakeFiles/game.dir/main.cpp.o -o ../bin/game  ../lib/libengine.a /home/ok/Code/ProjectEngine/vendor/raylib/lib/libraylib.a -lm -lpthread -ldl

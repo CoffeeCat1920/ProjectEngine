@@ -1,0 +1,8 @@
+/home/ok/Code/ProjectEngine/build/CMakeFiles/edit_cache.dir
+/home/ok/Code/ProjectEngine/build/CMakeFiles/rebuild_cache.dir
+/home/ok/Code/ProjectEngine/build/engine/CMakeFiles/engine.dir
+/home/ok/Code/ProjectEngine/build/engine/CMakeFiles/edit_cache.dir
+/home/ok/Code/ProjectEngine/build/engine/CMakeFiles/rebuild_cache.dir
+/home/ok/Code/ProjectEngine/build/game/CMakeFiles/game.dir
+/home/ok/Code/ProjectEngine/build/game/CMakeFiles/edit_cache.dir
+/home/ok/Code/ProjectEngine/build/game/CMakeFiles/rebuild_cache.dir

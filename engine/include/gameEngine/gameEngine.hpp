@@ -1,12 +1,12 @@
 #pragma once
-#include "Scene/Scene.hpp"
-#include "SystemRegistry/SystemRegistry.hpp"
 #include <ComponentRegistry/Component.hpp>
 #include <ECS/ECS.h>
 #include <ECS/component/component.hpp>
 #include <ECS/entity/entity.hpp>
 #include <ECS/system/system.hpp>
+#include <Scene/Scene.hpp>
 #include <SystemRegistry/System.hpp>
+#include <SystemRegistry/SystemRegistry.hpp>
 #include <cameraController/cameraController.hpp>
 #include <core/colors.hpp>
 #include <core/setting.hpp>

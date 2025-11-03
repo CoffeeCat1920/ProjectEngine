@@ -14,6 +14,18 @@
 
 class ComponentRegistry {
 private:
+  struct string_hash {
+    using is_transparent = void;
+
+    size_t operator()(std::string_view sv) const noexcept {
+      return std::hash<std::string_view>{}(sv);
+    }
+
+    size_t operator()(const std::string &s) const noexcept {
+      return std::hash<std::string>{}(s);
+    }
+  };
+
   using DeserializeFunc = std::function<std::any(const json &)>;
   using SerializerFunc = std::function<json(const std::any &)>;
   using AdderFunc = std::function<void(Entity, const json &)>;
@@ -24,7 +36,9 @@ private:
     AdderFunc adder;
   };
 
-  std::unordered_map<std::string, ComponentOps> operations;
+  std::unordered_map<std::string, ComponentOps, string_hash, std::equal_to<>>
+      operations;
+
   ECS &gEcs = ECS::Instance();
 
   ComponentRegistry() { operations.reserve(MAX_COMPONENTS); }
@@ -35,10 +49,16 @@ public:
     return instance;
   }
 
+  ComponentRegistry(const ComponentRegistry &) = delete;
+  ComponentRegistry &operator=(const ComponentRegistry &) = delete;
+  ComponentRegistry(ComponentRegistry &&) = delete;
+  ComponentRegistry &operator=(ComponentRegistry &&) = delete;
+
   template <typename T> void Register(const std::string &name) {
     gEcs.RegisterComponent<T>();
 
     ComponentOps ops;
+
     ops.deserialize = [](const json &j) -> std::any { return j.get<T>(); };
 
     ops.serialize = [](const std::any &obj) -> json {
@@ -46,35 +66,40 @@ public:
     };
 
     ops.adder = [this](Entity entity, const json &componentJson) {
-      T comp = componentJson.get<T>();
-      gEcs.AddComponent(entity, std::move(comp));
+      gEcs.AddComponent(entity, componentJson.get<T>());
     };
 
     operations.emplace(name, std::move(ops));
   }
 
   void AddComponent(Entity entity, std::string_view name, const json &j) {
-    if (auto it = operations.find(std::string(name)); it != operations.end()) {
+    if (auto it = operations.find(name); it != operations.end()) {
       it->second.adder(entity, j);
     }
   }
 
   std::any Deserialize(std::string_view name, const json &j) {
-    if (auto it = operations.find(std::string(name)); it != operations.end()) {
+    if (auto it = operations.find(name); it != operations.end()) {
       return it->second.deserialize(j);
-    } else {
-      throw std::runtime_error(std::string("Component not registered: ") +
-                               std::string(name));
     }
+    throw std::runtime_error(std::string("Component not registered: ") +
+                             std::string(name));
   }
 
   nlohmann::json Serialize(std::string_view name, const std::any &obj) {
-    if (auto it = operations.find(std::string(name)); it != operations.end()) {
+    if (auto it = operations.find(name); it != operations.end()) {
       return it->second.serialize(obj);
-    } else {
-      throw std::runtime_error(std::string("Component not registered: ") +
-                               std::string(name));
     }
+    throw std::runtime_error(std::string("Component not registered: ") +
+                             std::string(name));
+  }
+
+  [[nodiscard]] bool IsRegistered(std::string_view name) const noexcept {
+    return operations.find(name) != operations.end();
+  }
+
+  [[nodiscard]] size_t GetRegisteredCount() const noexcept {
+    return operations.size();
   }
 };
 
