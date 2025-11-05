@@ -1,41 +1,47 @@
-# Project Description
+<p align="center">
+  <img src="assets/icon.png" alt="Project Icon">
+</p>
+# 🎮 Project Engine 
+A lightweight, modular **Entity-Component-System (ECS)** based game engine built in C++ with support for rendering, physics, and scene management. Designed for flexibility, maintainability, and extensibility — this engine separates the core ECS logic from the game layer.
 
-- [X] Basic ECS
-- [X] Improving the ECS 
-    - [X] Adding Argument Pack methods
-    - [X] Improving functionality system manager's signature 
-    - [X] Correcting the asserts and adding them where appropiate
-    - [X] Moving the game test to game layer and adding utility methods to gameEngine class to allow game layer to make the actual game by using it.
+---
 
-- [X] Adding one small built-in component and one simple system
-    - [X] Finding a way to save components efficently in gameEngine layer.
-    - [X] A way to efficently load the components required in a scene.
-    - [X] Finding a way to save systems efficently in gameEngine layer.
-    - [X] A way to efficently load the components required in a scene.
-    - [X] A way to make gEcs inaccessable to game layer. 
+## 🚀 Features
 
-- [X] Systems and component Management
-    - [X] I think all default systems be always present. I hope it doesn't becomes any issue though.
-    - [X] Move the Signature to System base
+### ✅ Core Systems
+- Efficient **ECS architecture**
+- Improved **argument pack methods** for system and component management
+- Strict **assertions and validation**
+- **Utility methods** in `GameEngine` to interact cleanly with the game layer
 
-- [X] Scene Management
-    - [X] Make a util method in ECS class
-    - [X] Entity Serilization 
-    - [X] Entity Desiilization
-    - [X] Scene struct 
-        - [X] Macro Based Refelction 
-            - [X] Create the component registry
-            - [X] Register all the component through it
-            - [X] Register component in both ECS and registry
-            - [X] Automatically creating to and from json functionality
-- [ ] Shifting the project to be using Cmake instead of make. 
-- [-] Adding Support for Lua
-- [ ] Asset Management.
-- [ ] Agnostic Input handeling.
-    - [ ] Systems layer input defination
-- [ ] Test it on game layer
-- [ ] Add lua support
-- [ ] Testing adding a component and system at game level
-- [ ] Adding test cases 
-- [ ] Adding QuadTree based entity poitioning
-- [ ] Adding poition based entity query
+### ✅ Components & Systems
+- Built-in example components and systems
+- Efficient component storage and retrieval
+- Serialization & deserialization of entities and scenes
+- Component registry with **macro-based reflection**
+
+### ✅ Scene Management
+- JSON-based **entity serialization/deserialization**
+- Automatic **component registration**
+- Simplified scene struct handling
+
+---
+
+## 🧩 Upcoming Work (Next Semester)
+- Asset Management  
+- Agnostic Input Handling  
+- Lua Scripting Integration  
+- Dynamic Component & System Loading at Game Level  
+- QuadTree-Based Spatial Partitioning  
+- Position-Based Entity Queries  
+
+---
+
+## 🛠️ Build Instructions
+```bash
+git clone <repo-url>
+cd <repo-folder>
+mkdir build && cd build
+cmake ..
+make
+./FallingBoxes
