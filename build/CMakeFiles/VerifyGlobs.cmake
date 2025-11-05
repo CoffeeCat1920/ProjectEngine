@@ -38,18 +38,18 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "/home/ok/Code/ProjectEngine/build/CMakeFiles/cmake.verify_globs")
 endif()
 
-# GAME_SOURCES at game/CMakeLists.txt:4 (file)
-file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/ok/Code/ProjectEngine/game/*.cpp")
+# GAME_SOURCES at examples/game/CMakeLists.txt:3 (file)
+file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/ok/Code/ProjectEngine/examples/game/*.cpp")
 set(OLD_GLOB
-  "/home/ok/Code/ProjectEngine/game/main.cpp"
+  "/home/ok/Code/ProjectEngine/examples/game/main.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
   file(TOUCH_NOCREATE "/home/ok/Code/ProjectEngine/build/CMakeFiles/cmake.verify_globs")
 endif()
 
-# GAME_SOURCES at game/CMakeLists.txt:4 (file)
-file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/ok/Code/ProjectEngine/game/src/*.cpp")
+# GAME_SOURCES at examples/game/CMakeLists.txt:3 (file)
+file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/ok/Code/ProjectEngine/examples/game/src/**/*.cpp")
 set(OLD_GLOB
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

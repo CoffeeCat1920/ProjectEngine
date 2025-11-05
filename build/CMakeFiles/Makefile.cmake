@@ -13,7 +13,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/VerifyGlobs.cmake"
   "CMakeFiles/cmake.verify_globs"
   "/home/ok/Code/ProjectEngine/engine/CMakeLists.txt"
-  "/home/ok/Code/ProjectEngine/game/CMakeLists.txt"
+  "/home/ok/Code/ProjectEngine/examples/game/CMakeLists.txt"
   "/usr/share/cmake/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
   "/usr/share/cmake/Modules/CMakeGenericSystem.cmake"
@@ -48,11 +48,11 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "engine/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "game/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "examples/game/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "engine/CMakeFiles/engine.dir/DependInfo.cmake"
-  "game/CMakeFiles/game.dir/DependInfo.cmake"
+  "examples/game/CMakeFiles/GameExample.dir/DependInfo.cmake"
   )

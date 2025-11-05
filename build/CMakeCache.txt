@@ -190,6 +190,33 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
+Falling_BINARY_DIR:STATIC=/home/ok/Code/ProjectEngine/build/examples/game
+
+//Value Computed by CMake
+Falling_Boxes_BINARY_DIR:STATIC=/home/ok/Code/ProjectEngine/build/examples/game
+
+//Value Computed by CMake
+Falling_Boxes_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+Falling_Boxes_SOURCE_DIR:STATIC=/home/ok/Code/ProjectEngine/examples/game
+
+//Value Computed by CMake
+Falling_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+Falling_SOURCE_DIR:STATIC=/home/ok/Code/ProjectEngine/examples/game
+
+//Value Computed by CMake
+GameExample_BINARY_DIR:STATIC=/home/ok/Code/ProjectEngine/build/examples/game
+
+//Value Computed by CMake
+GameExample_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+GameExample_SOURCE_DIR:STATIC=/home/ok/Code/ProjectEngine/examples/game
+
+//Value Computed by CMake
 GameProject_BINARY_DIR:STATIC=/home/ok/Code/ProjectEngine/build
 
 //Value Computed by CMake

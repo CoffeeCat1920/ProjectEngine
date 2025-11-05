@@ -64,22 +64,22 @@ CMAKE_BINARY_DIR = /home/ok/Code/ProjectEngine/build
 
 # The main recursive "all" target.
 all: engine/all
-all: game/all
+all: examples/game/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: engine/codegen
-codegen: game/codegen
+codegen: examples/game/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
 preinstall: engine/preinstall
-preinstall: game/preinstall
+preinstall: examples/game/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: engine/clean
-clean: game/clean
+clean: examples/game/clean
 .PHONY : clean
 
 #=============================================================================
@@ -102,23 +102,23 @@ engine/clean: engine/CMakeFiles/engine.dir/clean
 .PHONY : engine/clean
 
 #=============================================================================
-# Directory level rules for directory game
+# Directory level rules for directory examples/game
 
 # Recursive "all" directory target.
-game/all: game/CMakeFiles/game.dir/all
-.PHONY : game/all
+examples/game/all: examples/game/CMakeFiles/GameExample.dir/all
+.PHONY : examples/game/all
 
 # Recursive "codegen" directory target.
-game/codegen: game/CMakeFiles/game.dir/codegen
-.PHONY : game/codegen
+examples/game/codegen: examples/game/CMakeFiles/GameExample.dir/codegen
+.PHONY : examples/game/codegen
 
 # Recursive "preinstall" directory target.
-game/preinstall:
-.PHONY : game/preinstall
+examples/game/preinstall:
+.PHONY : examples/game/preinstall
 
 # Recursive "clean" directory target.
-game/clean: game/CMakeFiles/game.dir/clean
-.PHONY : game/clean
+examples/game/clean: examples/game/CMakeFiles/GameExample.dir/clean
+.PHONY : examples/game/clean
 
 #=============================================================================
 # Target rules for target engine/CMakeFiles/engine.dir
@@ -127,7 +127,7 @@ game/clean: game/CMakeFiles/game.dir/clean
 engine/CMakeFiles/engine.dir/all:
 	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/depend
 	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=1,2,3 "Built target engine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=3,4,5 "Built target engine"
 .PHONY : engine/CMakeFiles/engine.dir/all
 
 # Build rule for subdir invocation for target.
@@ -144,7 +144,7 @@ engine: engine/CMakeFiles/engine.dir/rule
 # codegen rule for target.
 engine/CMakeFiles/engine.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=1,2,3 "Finished codegen for target engine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=3,4,5 "Finished codegen for target engine"
 .PHONY : engine/CMakeFiles/engine.dir/codegen
 
 # clean rule for target.
@@ -153,36 +153,36 @@ engine/CMakeFiles/engine.dir/clean:
 .PHONY : engine/CMakeFiles/engine.dir/clean
 
 #=============================================================================
-# Target rules for target game/CMakeFiles/game.dir
+# Target rules for target examples/game/CMakeFiles/GameExample.dir
 
 # All Build rule for target.
-game/CMakeFiles/game.dir/all: engine/CMakeFiles/engine.dir/all
-	$(MAKE) $(MAKESILENT) -f game/CMakeFiles/game.dir/build.make game/CMakeFiles/game.dir/depend
-	$(MAKE) $(MAKESILENT) -f game/CMakeFiles/game.dir/build.make game/CMakeFiles/game.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=4,5 "Built target game"
-.PHONY : game/CMakeFiles/game.dir/all
+examples/game/CMakeFiles/GameExample.dir/all: engine/CMakeFiles/engine.dir/all
+	$(MAKE) $(MAKESILENT) -f examples/game/CMakeFiles/GameExample.dir/build.make examples/game/CMakeFiles/GameExample.dir/depend
+	$(MAKE) $(MAKESILENT) -f examples/game/CMakeFiles/GameExample.dir/build.make examples/game/CMakeFiles/GameExample.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=1,2 "Built target GameExample"
+.PHONY : examples/game/CMakeFiles/GameExample.dir/all
 
 # Build rule for subdir invocation for target.
-game/CMakeFiles/game.dir/rule: cmake_check_build_system
+examples/game/CMakeFiles/GameExample.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ok/Code/ProjectEngine/build/CMakeFiles 5
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 game/CMakeFiles/game.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/game/CMakeFiles/GameExample.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ok/Code/ProjectEngine/build/CMakeFiles 0
-.PHONY : game/CMakeFiles/game.dir/rule
+.PHONY : examples/game/CMakeFiles/GameExample.dir/rule
 
 # Convenience name for target.
-game: game/CMakeFiles/game.dir/rule
-.PHONY : game
+GameExample: examples/game/CMakeFiles/GameExample.dir/rule
+.PHONY : GameExample
 
 # codegen rule for target.
-game/CMakeFiles/game.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f game/CMakeFiles/game.dir/build.make game/CMakeFiles/game.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=4,5 "Finished codegen for target game"
-.PHONY : game/CMakeFiles/game.dir/codegen
+examples/game/CMakeFiles/GameExample.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f examples/game/CMakeFiles/GameExample.dir/build.make examples/game/CMakeFiles/GameExample.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=1,2 "Finished codegen for target GameExample"
+.PHONY : examples/game/CMakeFiles/GameExample.dir/codegen
 
 # clean rule for target.
-game/CMakeFiles/game.dir/clean:
-	$(MAKE) $(MAKESILENT) -f game/CMakeFiles/game.dir/build.make game/CMakeFiles/game.dir/clean
-.PHONY : game/CMakeFiles/game.dir/clean
+examples/game/CMakeFiles/GameExample.dir/clean:
+	$(MAKE) $(MAKESILENT) -f examples/game/CMakeFiles/GameExample.dir/build.make examples/game/CMakeFiles/GameExample.dir/clean
+.PHONY : examples/game/CMakeFiles/GameExample.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

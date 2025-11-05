@@ -42,6 +42,25 @@ private:
       : windowConfig(config), title(title),
         cameraController(windowConfig.scale) {}
 
+  void BeginFrame() {
+    BeginDrawing();
+    ClearBackground(BACKGROUND);
+    BeginMode2D(cameraController.GetCamera());
+  }
+
+  void EndFrame() {
+    EndMode2D();
+
+    int fps = GetFPS();
+    std::string fpsText = "FPS: " + std::to_string(fps);
+    int textWidth = MeasureText(fpsText.c_str(), 20);
+
+    DrawText(fpsText.c_str(), windowConfig.rendering_width() - textWidth - 10,
+             10, 20, GRUVBOX_AQUA);
+
+    EndDrawing();
+  }
+
 public:
   GameEngine(const GameEngine &) = delete;
   GameEngine &operator=(const GameEngine &) = delete;
@@ -69,25 +88,13 @@ public:
 
   void LoadScene(std::filesystem::path scenePath) { Scene scene(scenePath); }
 
-  void BeginFrame() {
-    BeginDrawing();
-    ClearBackground(BACKGROUND);
-    BeginMode2D(cameraController.GetCamera());
-    systemRegistery.RenderUpdate();
-  }
-
-  void EndFrame() {
-    EndMode2D();
-
-    int fps = GetFPS();
-    std::string fpsText = "FPS: " + std::to_string(fps);
-    int textWidth = MeasureText(fpsText.c_str(), 20);
-
-    DrawText(fpsText.c_str(), windowConfig.rendering_width() - textWidth - 10,
-             10, 20, GRUVBOX_AQUA);
-
-    EndDrawing();
-    systemRegistery.PhysicsUpdate();
+  void Run() {
+    while (!WindowShouldClose()) {
+      BeginFrame();
+      systemRegistery.RenderUpdate();
+      EndFrame();
+      systemRegistery.PhysicsUpdate();
+    }
   }
 
   ~GameEngine() { CloseWindow(); }

@@ -1,4 +1,4 @@
-#include "./src/game/game.hpp"
+#include "./include/game/game.hpp"
 
 int main() {
   WindowConfig config(32, 10, 6);

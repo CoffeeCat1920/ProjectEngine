@@ -131,17 +131,17 @@ engine/fast:
 .PHONY : engine/fast
 
 #=============================================================================
-# Target rules for targets named game
+# Target rules for targets named GameExample
 
 # Build rule for target.
-game: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 game
-.PHONY : game
+GameExample: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GameExample
+.PHONY : GameExample
 
 # fast build rule for target.
-game/fast:
-	$(MAKE) $(MAKESILENT) -f game/CMakeFiles/game.dir/build.make game/CMakeFiles/game.dir/build
-.PHONY : game/fast
+GameExample/fast:
+	$(MAKE) $(MAKESILENT) -f examples/game/CMakeFiles/GameExample.dir/build.make examples/game/CMakeFiles/GameExample.dir/build
+.PHONY : GameExample/fast
 
 # Help Target
 help:
@@ -151,8 +151,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... GameExample"
 	@echo "... engine"
-	@echo "... game"
 .PHONY : help
 
 
