@@ -1,6 +1,7 @@
 <p align="center">
   <img src="assets/icon.png" alt="Project Icon">
 </p>
+
 # 🎮 Project Engine 
 A lightweight, modular **Entity-Component-System (ECS)** based game engine built in C++ with support for rendering, physics, and scene management. Designed for flexibility, maintainability, and extensibility — this engine separates the core ECS logic from the game layer.
 
