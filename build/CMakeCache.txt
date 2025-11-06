@@ -208,13 +208,13 @@ Falling_IS_TOP_LEVEL:STATIC=OFF
 Falling_SOURCE_DIR:STATIC=/home/ok/Code/ProjectEngine/examples/game
 
 //Value Computed by CMake
-GameExample_BINARY_DIR:STATIC=/home/ok/Code/ProjectEngine/build/examples/game
+GameExample_BINARY_DIR:STATIC=/home/ok/Code/ProjectEngine/build/examples/TwoThousandFallingBoxes
 
 //Value Computed by CMake
 GameExample_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
-GameExample_SOURCE_DIR:STATIC=/home/ok/Code/ProjectEngine/examples/game
+GameExample_SOURCE_DIR:STATIC=/home/ok/Code/ProjectEngine/examples/TwoThousandFallingBoxes
 
 //Value Computed by CMake
 GameProject_BINARY_DIR:STATIC=/home/ok/Code/ProjectEngine/build
@@ -224,6 +224,15 @@ GameProject_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 GameProject_SOURCE_DIR:STATIC=/home/ok/Code/ProjectEngine
+
+//Value Computed by CMake
+Space_Invaders_BINARY_DIR:STATIC=/home/ok/Code/ProjectEngine/build/examples/Astroids
+
+//Value Computed by CMake
+Space_Invaders_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+Space_Invaders_SOURCE_DIR:STATIC=/home/ok/Code/ProjectEngine/examples/Astroids
 
 
 ########################
@@ -316,7 +325,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

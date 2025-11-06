@@ -1,7 +1,7 @@
 #include "./include/game/game.hpp"
 
 int main() {
-  WindowConfig config(32, 10, 6);
+  WindowConfig config(16, 10, 10);
   Game game(config);
   game.Init();
   game.Run();

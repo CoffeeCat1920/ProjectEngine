@@ -131,6 +131,19 @@ engine/fast:
 .PHONY : engine/fast
 
 #=============================================================================
+# Target rules for targets named Space_Invaders
+
+# Build rule for target.
+Space_Invaders: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Space_Invaders
+.PHONY : Space_Invaders
+
+# fast build rule for target.
+Space_Invaders/fast:
+	$(MAKE) $(MAKESILENT) -f examples/Astroids/CMakeFiles/Space_Invaders.dir/build.make examples/Astroids/CMakeFiles/Space_Invaders.dir/build
+.PHONY : Space_Invaders/fast
+
+#=============================================================================
 # Target rules for targets named GameExample
 
 # Build rule for target.
@@ -140,7 +153,7 @@ GameExample: cmake_check_build_system
 
 # fast build rule for target.
 GameExample/fast:
-	$(MAKE) $(MAKESILENT) -f examples/game/CMakeFiles/GameExample.dir/build.make examples/game/CMakeFiles/GameExample.dir/build
+	$(MAKE) $(MAKESILENT) -f examples/TwoThousandFallingBoxes/CMakeFiles/GameExample.dir/build.make examples/TwoThousandFallingBoxes/CMakeFiles/GameExample.dir/build
 .PHONY : GameExample/fast
 
 # Help Target
@@ -152,6 +165,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... GameExample"
+	@echo "... Space_Invaders"
 	@echo "... engine"
 .PHONY : help
 

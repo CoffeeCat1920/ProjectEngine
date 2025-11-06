@@ -49,7 +49,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ok/Code/ProjectEngine/build/examples/game/cmake_install.cmake")
+  include("/home/ok/Code/ProjectEngine/build/examples/Astroids/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/ok/Code/ProjectEngine/build/examples/TwoThousandFallingBoxes/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT

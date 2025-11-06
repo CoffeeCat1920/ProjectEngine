@@ -29,6 +29,7 @@
             - [X] Register component in both ECS and registry
             - [X] Automatically creating to and from json functionality
 - [X] Shifting the project to be using Cmake instead of make. 
+- [-] Unloading the entities 
 - [ ] Asset Management.
 ----------------------------- NEXT SEMESTER ----------------------------
 - [ ] Agnostic Input handeling.
