@@ -8,17 +8,26 @@
 struct CTransform {
   Vector2 position{0, 0};
   Vector2 scale{1, 1};
+  float rotation = 0.0f;
   NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(CTransform, position, scale)
 };
 REFLECTION(CTransform);
 
 struct CRectangle {
-  float w = 12, h = 12;
+  float w = 12.0f, h = 12.0f;
   CRectangle() = default;
   CRectangle(float w, float h) : w(w), h(h) {}
   NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(CRectangle, w, h);
 };
 REFLECTION(CRectangle);
+
+struct CTriangle {
+  float side = 12.0f;
+  CTriangle() = default;
+  CTriangle(float side) : side(side) {}
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(CTriangle, side);
+};
+REFLECTION(CTriangle);
 
 struct CSprite {
   std::filesystem::path path = "";

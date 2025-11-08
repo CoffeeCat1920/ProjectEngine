@@ -25,7 +25,6 @@ struct WindowConfig {
       : blockSize(block), width(w), height(h), scale(s) {}
 
   int rendering_width() const { return width * blockSize * scale; }
-
   int rendering_height() const { return height * blockSize * scale; }
 };
 
@@ -35,16 +34,17 @@ private:
   WindowConfig windowConfig;
   SystemRegistry &systemRegistery = SystemRegistry::Instance();
   std::string title;
+  Color backgroundColor;
   CameraController cameraController;
 
-  explicit GameEngine(const WindowConfig &config = {},
-                      const std::string &title = "Window")
-      : windowConfig(config), title(title),
+  explicit GameEngine(const WindowConfig &config, const std::string &title,
+                      Color background = BLACK)
+      : windowConfig(config), title(title), backgroundColor(background),
         cameraController(windowConfig.scale) {}
 
   void BeginFrame() {
     BeginDrawing();
-    ClearBackground(BACKGROUND);
+    ClearBackground(backgroundColor);
     BeginMode2D(cameraController.GetCamera());
   }
 
@@ -68,8 +68,9 @@ public:
   GameEngine &operator=(GameEngine &&) = delete;
 
   static GameEngine &Instance(const WindowConfig &config = {},
-                              const std::string &title = "Window") {
-    static GameEngine instance(config, title);
+                              const std::string &title = "Window",
+                              Color background = BACKGROUND) {
+    static GameEngine instance(config, title, background);
     return instance;
   }
 
@@ -81,9 +82,9 @@ public:
 
   template <typename... Components>
   Entity CreateEntity(const std::string &name, Components &&...comps) {
-    Entity entity = gEcs.AddEntity(name);
-    gEcs.AddComponent(entity, std::forward<Components>(comps)...);
-    return entity;
+    Entity e = gEcs.AddEntity(name);
+    gEcs.AddComponent(e, std::forward<Components>(comps)...);
+    return e;
   }
 
   void LoadScene(std::filesystem::path scenePath) { Scene scene(scenePath); }
