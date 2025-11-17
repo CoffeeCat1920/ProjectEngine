@@ -448,6 +448,7 @@ typedef enum {
     RL_LOG_NONE                 // Disable logging
 } rlTraceLogLevel;
 
+
 // Texture pixel formats
 // NOTE: Support depends on OpenGL version
 typedef enum {

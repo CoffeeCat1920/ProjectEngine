@@ -33,7 +33,6 @@ struct CSprite {
   std::filesystem::path path = "";
   Texture2D texture;
   CSprite(std::filesystem::path p) : path(std::move(p)) {}
-
   CSprite() { path = "./assets/bird.png"; }
 };
 

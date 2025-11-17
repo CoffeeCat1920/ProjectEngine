@@ -1,3 +1,5 @@
+// To defining components related to Physics-System cycle 
+
 #pragma once
 
 #include <ComponentRegistry/ComponentRegistry.hpp>
