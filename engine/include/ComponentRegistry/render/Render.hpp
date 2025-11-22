@@ -29,6 +29,12 @@ struct CTriangle {
 };
 REFLECTION(CTriangle);
 
+struct CIsoTriangle {
+  float base = 12.0f, height = 12.0f;
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(CIsoTriangle, base, height);
+};
+REFLECTION(CIsoTriangle);
+
 struct CSprite {
   std::filesystem::path path = "";
   Texture2D texture;
