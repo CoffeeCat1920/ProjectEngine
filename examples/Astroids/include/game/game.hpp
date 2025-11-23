@@ -1,4 +1,5 @@
 #pragma once
+#include "../system/system.hpp"
 #include "core/colors.hpp"
 #include "raylib.h"
 #include <ComponentRegistry/physics/Physics.hpp>
@@ -18,7 +19,7 @@ public:
     engine.CreateEntity("Space Ship",
                         CTransform{.position = Vector2{160.0f / 2, 160.0f / 2},
                                    .rotation = 12.0f},
-                        CIsoTriangle{.base = 12, .height = 13});
+                        CIsoTriangle{.base = 30, .height = 33});
   }
 
   void Run() { engine.Run(); }

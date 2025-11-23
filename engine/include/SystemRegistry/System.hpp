@@ -97,6 +97,32 @@ struct SIsoTrangle : System {
     Vector2 A{}, B{}, C{};
   };
 
+  inline Vector2 RotatePoint(Vector2 point, Vector2 pivot, float angleDeg) {
+    float rad = angleDeg * DEG2RAD;
+
+    float s = sinf(rad);
+    float c = cosf(rad);
+
+    point.x -= pivot.x;
+    point.y -= pivot.y;
+
+    float xnew = point.x * c - point.y * s;
+    float ynew = point.x * s + point.y * c;
+
+    point.x = xnew + pivot.x;
+    point.y = ynew + pivot.y;
+
+    return point;
+  }
+
+  Points GetRotatedPoints(const Points &pts, Vector2 origin, float rotation) {
+    Points out;
+    out.A = RotatePoint(pts.A, origin, rotation);
+    out.B = RotatePoint(pts.B, origin, rotation);
+    out.C = RotatePoint(pts.C, origin, rotation);
+    return out;
+  }
+
   Points GetPoints(float base, float height, Vector2 origin) {
     Points p;
     p.A = {origin.x, origin.y - height / 2};
@@ -114,7 +140,9 @@ struct SIsoTrangle : System {
 
       Points p = GetPoints(player.base, player.height, origin);
 
-      DrawTriangle(p.A, p.B, p.C, RED);
+      Points rotated = GetRotatedPoints(p, origin, transform.rotation);
+
+      DrawTriangle(rotated.A, rotated.B, rotated.C, RED);
     }
   }
 };

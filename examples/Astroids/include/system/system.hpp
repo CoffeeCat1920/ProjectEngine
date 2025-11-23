@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../components/components.hpp"
 #include <ComponentRegistry/render/Render.hpp>
 #include <ECS/system/system.hpp>
 #include <SystemRegistry/SystemRegistry.hpp>
@@ -10,7 +11,6 @@ struct SPlayerInput : System {
   ECS &gEcs = ECS::Instance();
   void Update() override {
     for (auto &entity : System::entities) {
-      // auto &triangle = gEcs.GetComponent<CTriangle>(entity);
       auto &transform = gEcs.GetComponent<CTransform>(entity);
 
       if (IsKeyDown(KEY_LEFT)) {
@@ -21,7 +21,7 @@ struct SPlayerInput : System {
     }
   }
 };
-REGISTER_SYSTEM(SPlayerInput, Render, CTriangle, CTransform);
+REGISTER_SYSTEM(SPlayerInput, Render, CIsoTriangle, CTransform);
 
 struct SMoveTowardsTop : System {
   ECS &gEcs = ECS::Instance();
@@ -45,15 +45,19 @@ struct SMoveTowardsTop : System {
     return {v.x / len, v.y / len};
   }
 
-  inline Vector2 GetTopDirectionWorld(CTriangle &tri, CTransform &t) {
-    Vector2 localTop = GetLocalTopPoint(tri.side);
+  inline Vector2 GetTopDirectionWorld(CTransform &t) {
+    Vector2 localDir = {0.0f, -1.0f};
 
-    localTop.x *= t.scale.x;
-    localTop.y *= t.scale.y;
+    float rad = t.rotation * DEG2RAD;
 
-    Vector2 rotated = Rotate(localTop, t.rotation);
+    float s = sinf(rad);
+    float c = cosf(rad);
 
-    return Normalize(rotated);
+    Vector2 worldDir;
+    worldDir.x = localDir.x * c - localDir.y * s;
+    worldDir.y = localDir.x * s + localDir.y * c;
+
+    return worldDir;
   }
 
   inline void ApplyMovement(CTransform &t, Vector2 dir, float speed) {
@@ -62,18 +66,110 @@ struct SMoveTowardsTop : System {
   }
 
   void Update() override {
-    if (!IsKeyDown(KEY_SPACE))
+    if (!IsKeyDown(KEY_UP))
       return;
 
-    const float moveSpeed = -2.0f;
+    const float moveSpeed = 5.0f;
 
     for (auto &entity : System::entities) {
-      auto &tri = gEcs.GetComponent<CTriangle>(entity);
       auto &t = gEcs.GetComponent<CTransform>(entity);
 
-      Vector2 dir = GetTopDirectionWorld(tri, t);
+      Vector2 dir = GetTopDirectionWorld(t);
       ApplyMovement(t, dir, moveSpeed);
     }
   }
 };
-REGISTER_SYSTEM(SMoveTowardsTop, Physics, CTriangle, CTransform);
+REGISTER_SYSTEM(SMoveTowardsTop, Physics, CIsoTriangle, CTransform);
+
+struct SScreenWrap : System {
+  ECS &gEcs = ECS::Instance();
+
+  void Update() override {
+    int screenWidth = GetScreenWidth();
+    int screenHeight = GetScreenHeight();
+
+    for (auto &entity : System::entities) {
+      auto &transform = gEcs.GetComponent<CTransform>(entity);
+
+      if (transform.position.x < 0) {
+        transform.position.x = screenWidth;
+      } else if (transform.position.x > screenWidth) {
+        transform.position.x = 0;
+      }
+
+      if (transform.position.y < 0) {
+        transform.position.y = screenHeight;
+      } else if (transform.position.y > screenHeight) {
+        transform.position.y = 0;
+      }
+    }
+  }
+};
+REGISTER_SYSTEM(SScreenWrap, Physics, CIsoTriangle, CTransform);
+
+struct SPlayerShooting : System {
+  ECS &gEcs = ECS::Instance();
+  float shootCooldown = 0.0f;
+  const float shootDelay = 0.25f; // seconds between shots
+
+  inline Vector2 GetTopDirectionWorld(CTransform &t) {
+    Vector2 localDir = {0.0f, -1.0f};
+    float rad = t.rotation * DEG2RAD;
+    float s = sinf(rad);
+    float c = cosf(rad);
+    Vector2 worldDir;
+    worldDir.x = localDir.x * c - localDir.y * s;
+    worldDir.y = localDir.x * s + localDir.y * c;
+    return worldDir;
+  }
+
+  void Update() override {
+    float dt = GetFrameTime();
+    shootCooldown -= dt;
+
+    if (IsKeyPressed(KEY_SPACE) && shootCooldown <= 0.0f) {
+      for (auto &entity : System::entities) {
+        auto &transform = gEcs.GetComponent<CTransform>(entity);
+        Vector2 shootDir = GetTopDirectionWorld(transform);
+
+        // Create projectile entity
+        const float projectileSpeed = 10.0f;
+        Entity projectile = gEcs.CreateEntity(
+            "Projectile",
+            CTransform{.position = transform.position,
+                       .rotation = transform.rotation,
+                       .scale = {0.3f, 0.3f}},
+            CIsoTriangle{.base = 10, .height = 12},
+            CProjectile{.velocity = {shootDir.x * projectileSpeed,
+                                     shootDir.y * projectileSpeed}});
+
+        shootCooldown = shootDelay;
+      }
+    }
+  }
+};
+REGISTER_SYSTEM(SPlayerShooting, Physics, CIsoTriangle, CTransform);
+
+struct SProjectileMovement : System {
+  ECS &gEcs = ECS::Instance();
+
+  void Update() override {
+    float dt = GetFrameTime();
+
+    for (auto &entity : System::entities) {
+      auto &transform = gEcs.GetComponent<CTransform>(entity);
+      auto &projectile = gEcs.GetComponent<CProjectile>(entity);
+
+      // Move projectile
+      transform.position.x += projectile.velocity.x * dt * 60.0f;
+      transform.position.y += projectile.velocity.y * dt * 60.0f;
+
+      // // Update lifetime
+      // projectile.lifetime -= dt;
+      // if (projectile.lifetime <= 0.0f) {
+      //   gEcs.DestroyEntity(entity);
+      // }
+    }
+  }
+};
+REGISTER_SYSTEM(SProjectileMovement, Physics, CProjectile, CTransform);
