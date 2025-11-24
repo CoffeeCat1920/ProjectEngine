@@ -19,3 +19,4 @@ struct SPlayerInput : System {
     }
   }
 };
+REGISTER_SYSTEM(SPlayerInput, Render, CIsoTriangle, CTransform);

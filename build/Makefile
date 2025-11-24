@@ -144,6 +144,19 @@ Space_Invaders/fast:
 .PHONY : Space_Invaders/fast
 
 #=============================================================================
+# Target rules for targets named Pong
+
+# Build rule for target.
+Pong: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Pong
+.PHONY : Pong
+
+# fast build rule for target.
+Pong/fast:
+	$(MAKE) $(MAKESILENT) -f examples/Pong/CMakeFiles/Pong.dir/build.make examples/Pong/CMakeFiles/Pong.dir/build
+.PHONY : Pong/fast
+
+#=============================================================================
 # Target rules for targets named GameExample
 
 # Build rule for target.
@@ -165,6 +178,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... GameExample"
+	@echo "... Pong"
 	@echo "... Space_Invaders"
 	@echo "... engine"
 .PHONY : help

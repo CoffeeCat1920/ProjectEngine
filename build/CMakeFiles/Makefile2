@@ -65,24 +65,28 @@ CMAKE_BINARY_DIR = /home/ok/Code/ProjectEngine/build
 # The main recursive "all" target.
 all: engine/all
 all: examples/Astroids/all
+all: examples/Pong/all
 all: examples/TwoThousandFallingBoxes/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: engine/codegen
 codegen: examples/Astroids/codegen
+codegen: examples/Pong/codegen
 codegen: examples/TwoThousandFallingBoxes/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
 preinstall: engine/preinstall
 preinstall: examples/Astroids/preinstall
+preinstall: examples/Pong/preinstall
 preinstall: examples/TwoThousandFallingBoxes/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: engine/clean
 clean: examples/Astroids/clean
+clean: examples/Pong/clean
 clean: examples/TwoThousandFallingBoxes/clean
 .PHONY : clean
 
@@ -125,6 +129,25 @@ examples/Astroids/clean: examples/Astroids/CMakeFiles/Space_Invaders.dir/clean
 .PHONY : examples/Astroids/clean
 
 #=============================================================================
+# Directory level rules for directory examples/Pong
+
+# Recursive "all" directory target.
+examples/Pong/all: examples/Pong/CMakeFiles/Pong.dir/all
+.PHONY : examples/Pong/all
+
+# Recursive "codegen" directory target.
+examples/Pong/codegen: examples/Pong/CMakeFiles/Pong.dir/codegen
+.PHONY : examples/Pong/codegen
+
+# Recursive "preinstall" directory target.
+examples/Pong/preinstall:
+.PHONY : examples/Pong/preinstall
+
+# Recursive "clean" directory target.
+examples/Pong/clean: examples/Pong/CMakeFiles/Pong.dir/clean
+.PHONY : examples/Pong/clean
+
+#=============================================================================
 # Directory level rules for directory examples/TwoThousandFallingBoxes
 
 # Recursive "all" directory target.
@@ -150,7 +173,7 @@ examples/TwoThousandFallingBoxes/clean: examples/TwoThousandFallingBoxes/CMakeFi
 engine/CMakeFiles/engine.dir/all:
 	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/depend
 	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=5,6,7 "Built target engine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=7,8,9 "Built target engine"
 .PHONY : engine/CMakeFiles/engine.dir/all
 
 # Build rule for subdir invocation for target.
@@ -167,7 +190,7 @@ engine: engine/CMakeFiles/engine.dir/rule
 # codegen rule for target.
 engine/CMakeFiles/engine.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=5,6,7 "Finished codegen for target engine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=7,8,9 "Finished codegen for target engine"
 .PHONY : engine/CMakeFiles/engine.dir/codegen
 
 # clean rule for target.
@@ -182,7 +205,7 @@ engine/CMakeFiles/engine.dir/clean:
 examples/Astroids/CMakeFiles/Space_Invaders.dir/all: engine/CMakeFiles/engine.dir/all
 	$(MAKE) $(MAKESILENT) -f examples/Astroids/CMakeFiles/Space_Invaders.dir/build.make examples/Astroids/CMakeFiles/Space_Invaders.dir/depend
 	$(MAKE) $(MAKESILENT) -f examples/Astroids/CMakeFiles/Space_Invaders.dir/build.make examples/Astroids/CMakeFiles/Space_Invaders.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=3,4 "Built target Space_Invaders"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=5,6 "Built target Space_Invaders"
 .PHONY : examples/Astroids/CMakeFiles/Space_Invaders.dir/all
 
 # Build rule for subdir invocation for target.
@@ -199,13 +222,45 @@ Space_Invaders: examples/Astroids/CMakeFiles/Space_Invaders.dir/rule
 # codegen rule for target.
 examples/Astroids/CMakeFiles/Space_Invaders.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f examples/Astroids/CMakeFiles/Space_Invaders.dir/build.make examples/Astroids/CMakeFiles/Space_Invaders.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=3,4 "Finished codegen for target Space_Invaders"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=5,6 "Finished codegen for target Space_Invaders"
 .PHONY : examples/Astroids/CMakeFiles/Space_Invaders.dir/codegen
 
 # clean rule for target.
 examples/Astroids/CMakeFiles/Space_Invaders.dir/clean:
 	$(MAKE) $(MAKESILENT) -f examples/Astroids/CMakeFiles/Space_Invaders.dir/build.make examples/Astroids/CMakeFiles/Space_Invaders.dir/clean
 .PHONY : examples/Astroids/CMakeFiles/Space_Invaders.dir/clean
+
+#=============================================================================
+# Target rules for target examples/Pong/CMakeFiles/Pong.dir
+
+# All Build rule for target.
+examples/Pong/CMakeFiles/Pong.dir/all: engine/CMakeFiles/engine.dir/all
+	$(MAKE) $(MAKESILENT) -f examples/Pong/CMakeFiles/Pong.dir/build.make examples/Pong/CMakeFiles/Pong.dir/depend
+	$(MAKE) $(MAKESILENT) -f examples/Pong/CMakeFiles/Pong.dir/build.make examples/Pong/CMakeFiles/Pong.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=3,4 "Built target Pong"
+.PHONY : examples/Pong/CMakeFiles/Pong.dir/all
+
+# Build rule for subdir invocation for target.
+examples/Pong/CMakeFiles/Pong.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ok/Code/ProjectEngine/build/CMakeFiles 5
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/Pong/CMakeFiles/Pong.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ok/Code/ProjectEngine/build/CMakeFiles 0
+.PHONY : examples/Pong/CMakeFiles/Pong.dir/rule
+
+# Convenience name for target.
+Pong: examples/Pong/CMakeFiles/Pong.dir/rule
+.PHONY : Pong
+
+# codegen rule for target.
+examples/Pong/CMakeFiles/Pong.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f examples/Pong/CMakeFiles/Pong.dir/build.make examples/Pong/CMakeFiles/Pong.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ok/Code/ProjectEngine/build/CMakeFiles --progress-num=3,4 "Finished codegen for target Pong"
+.PHONY : examples/Pong/CMakeFiles/Pong.dir/codegen
+
+# clean rule for target.
+examples/Pong/CMakeFiles/Pong.dir/clean:
+	$(MAKE) $(MAKESILENT) -f examples/Pong/CMakeFiles/Pong.dir/build.make examples/Pong/CMakeFiles/Pong.dir/clean
+.PHONY : examples/Pong/CMakeFiles/Pong.dir/clean
 
 #=============================================================================
 # Target rules for target examples/TwoThousandFallingBoxes/CMakeFiles/GameExample.dir

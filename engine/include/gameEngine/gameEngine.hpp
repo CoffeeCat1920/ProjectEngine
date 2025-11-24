@@ -45,9 +45,12 @@ private:
   void BeginFrame() {
     BeginDrawing();
     ClearBackground(backgroundColor);
+    BeginMode2D(cameraController.GetCamera());
   }
 
   void EndFrame() {
+    EndMode2D();
+
     int fps = GetFPS();
     std::string fpsText = "FPS: " + std::to_string(fps);
     int textWidth = MeasureText(fpsText.c_str(), 20);

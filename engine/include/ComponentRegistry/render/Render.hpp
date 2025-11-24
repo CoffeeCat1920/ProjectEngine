@@ -15,8 +15,6 @@ REFLECTION(CTransform);
 
 struct CRectangle {
   float w = 12.0f, h = 12.0f;
-  CRectangle() = default;
-  CRectangle(float w, float h) : w(w), h(h) {}
   NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(CRectangle, w, h);
 };
 REFLECTION(CRectangle);

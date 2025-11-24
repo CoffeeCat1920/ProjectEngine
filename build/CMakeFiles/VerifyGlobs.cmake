@@ -57,6 +57,25 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "/home/ok/Code/ProjectEngine/build/CMakeFiles/cmake.verify_globs")
 endif()
 
+# GAME_SOURCES at examples/Pong/CMakeLists.txt:3 (file)
+file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/ok/Code/ProjectEngine/examples/Pong/*.cpp")
+set(OLD_GLOB
+  "/home/ok/Code/ProjectEngine/examples/Pong/main.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "/home/ok/Code/ProjectEngine/build/CMakeFiles/cmake.verify_globs")
+endif()
+
+# GAME_SOURCES at examples/Pong/CMakeLists.txt:3 (file)
+file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/ok/Code/ProjectEngine/examples/Pong/src/**/*.cpp")
+set(OLD_GLOB
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "/home/ok/Code/ProjectEngine/build/CMakeFiles/cmake.verify_globs")
+endif()
+
 # GAME_SOURCES at examples/TwoThousandFallingBoxes/CMakeLists.txt:3 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/ok/Code/ProjectEngine/examples/TwoThousandFallingBoxes/*.cpp")
 set(OLD_GLOB

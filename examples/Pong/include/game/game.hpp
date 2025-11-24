@@ -1,5 +1,5 @@
 #pragma once
-#include "../system/system.hpp"
+
 #include "core/colors.hpp"
 #include "raylib.h"
 #include <ComponentRegistry/physics/Physics.hpp>
@@ -16,10 +16,13 @@ public:
 
   void Init() {
     engine.Init();
-    engine.CreateEntity("Pleryer_one",
-                        CTransform{.position = Vector2{160.0f / 2, 160.0f / 2},
-                                   .rotation = 12.0f},
-                        CRectangle{});
+    engine.CreateEntity(
+        "Space Ship",
+        CTransform{.position = Vector2{engine.GetConfig().blockSize * 1.0f,
+                                       engine.GetConfig().blockSize * 4.0f},
+                   .rotation = 12.0f},
+        CRectangle{.w = (float)engine.GetConfig().blockSize,
+                   .h = (float)engine.GetConfig().blockSize * 2});
   }
 
   void Run() { engine.Run(); }
