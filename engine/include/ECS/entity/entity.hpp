@@ -29,6 +29,7 @@ public:
   EntityManager();
 
   Entity CreateEntity(std::string name);
+  void DestroyEntity(Entity entity);
 
   std::string GetName(Entity entity);
   const EntityVec &GetEntities(std::string);

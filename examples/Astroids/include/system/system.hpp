@@ -134,11 +134,14 @@ struct SPlayerShooting : System {
 
         // Create projectile entity
         const float projectileSpeed = 10.0f;
-        Entity projectile = gEcs.CreateEntity(
-            "Projectile",
-            CTransform{.position = transform.position,
-                       .rotation = transform.rotation,
-                       .scale = {0.3f, 0.3f}},
+        Entity projectile = gEcs.AddEntity("Projectile");
+        gEcs.AddComponent(
+            projectile,
+            CTransform{
+                .position = transform.position,
+                .scale = {0.3f, 0.3f},
+                .rotation = transform.rotation,
+            },
             CIsoTriangle{.base = 10, .height = 12},
             CProjectile{.velocity = {shootDir.x * projectileSpeed,
                                      shootDir.y * projectileSpeed}});
@@ -164,11 +167,11 @@ struct SProjectileMovement : System {
       transform.position.x += projectile.velocity.x * dt * 60.0f;
       transform.position.y += projectile.velocity.y * dt * 60.0f;
 
-      // // Update lifetime
-      // projectile.lifetime -= dt;
-      // if (projectile.lifetime <= 0.0f) {
-      //   gEcs.DestroyEntity(entity);
-      // }
+      // Update lifetime
+      projectile.lifetime -= dt;
+      if (projectile.lifetime <= 0.0f) {
+        gEcs.RemoveEntity(entity);
+      }
     }
   }
 };
