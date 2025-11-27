@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../components/components.hpp"
+#include "../system/system.hpp"
 #include "core/colors.hpp"
 #include "raylib.h"
 #include <ComponentRegistry/physics/Physics.hpp>
@@ -17,12 +19,22 @@ public:
   void Init() {
     engine.Init();
     engine.CreateEntity(
-        "Space Ship",
+        "PlayerA",
         CTransform{.position = Vector2{engine.GetConfig().blockSize * 1.0f,
                                        engine.GetConfig().blockSize * 4.0f},
                    .rotation = 12.0f},
         CRectangle{.w = (float)engine.GetConfig().blockSize,
-                   .h = (float)engine.GetConfig().blockSize * 2});
+                   .h = (float)engine.GetConfig().blockSize * 2},
+        CPlayerA{});
+
+    engine.CreateEntity(
+        "PlayerB",
+        CTransform{.position = Vector2{engine.GetConfig().blockSize * 18.0f,
+                                       engine.GetConfig().blockSize * 4.0f},
+                   .rotation = 12.0f},
+        CRectangle{.w = (float)engine.GetConfig().blockSize,
+                   .h = (float)engine.GetConfig().blockSize * 2},
+        CPlayerB{});
   }
 
   void Run() { engine.Run(); }
